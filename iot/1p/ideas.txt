@@ -1,3 +1,19 @@
-Heart Rate Monitor
-Alcohol Sensor
-Count cars using laser sensor
+Arduino
+
+# Proyecto 1: Chequeo de trafico
+
+Contar carros unando un sensor laser y un sensor de ultrasonido
+para registrar la posible velocidad de los carros y su posicion.
+
+El modelo entrenado calculara la velocidad de los carros en
+base a la distancia y el tiempo dando como resultado la velocidad
+aproximada.
+
+# Proyecto 2: Medidor de alcoholismo
+
+Usando un sensor de alcohol y un sensor de temperatura
+se medira el nivel de alcohol en la sangre de una persona
+y se le dara una recomendacion dependiendo de su nivel
+de alcohol en la sangre.
+
+# Proyecto 3: Presion arterial
