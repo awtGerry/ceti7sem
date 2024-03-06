@@ -6,7 +6,7 @@ case $1 in
     "4") file="OrdNumber.java" ;;
     "5") file="Substring.java" ;;
     "6") file="Hex2IP.java" ;;
-    "7") file="Ventana.java" ;;
+    "7") file="JFrame.java" ;;
     "8") file="Arquimedes.java" ;;
     "9") file="Pastel.java" ;;
     "10") file="Monito.java" ;;
