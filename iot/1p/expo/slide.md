@@ -1,7 +1,6 @@
 ---
 title: Machine learning para detectar ataques durante la distribución de claves cuánticas en redes IoT con aplicación a escenarios ferroviarios.
 author: Victor Gerardo Rodriguez Barragan
-date: Febrero 26, 2024
 ---
 
 # Enfoque:
@@ -42,8 +41,8 @@ Investigar la seguridad del sistema QKD propuesto utilizando técnicas de aprend
 QKD involucra a tres partes: Alice (transmisora), Bob (receptora) y Eve (potencial atacante).
 
 Dos canales de comunicacion:
-- cuantico: se utiliza para transmitir fotones (partículas de luz) polarizados aleatoriamente entre Alice y Bob.
-- clasico: canal de comunicación tradicional (como la radio) utilizado para el intercambio de información.
+- cuantico
+- clasico
 
 ### Como funciona?
 
@@ -70,13 +69,6 @@ Dos canales de comunicacion:
      - Alice y Bob comparan una parte de sus flujos clave.
      - Si la tasa de error supera un umbral, descartan la clave y repiten el proceso.
 
-<!-- pause -->
----
-## En español
-Este proceso garantiza que incluso si Eve intercepta la comunicación,
-no pueda adivinar con precisión la clave debido a la incertidumbre
-inherente a la mecánica cuántica y al error introducido por su interferencia.
-Las claves descartadas y la verificación de errores mejoran aún más la seguridad de la clave generada.
 <!-- end_slide -->
 
 # Modelo del sistema

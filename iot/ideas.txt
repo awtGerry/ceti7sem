@@ -1,19 +1,24 @@
-Arduino
+Tema: Chequeo de trafico
+Nombre: Victor Gerardo Rodriguez Barragan
+Tarjeta: Arduino
 
-# Proyecto 1: Chequeo de trafico
+Objetivo: Contar carros y registrar su posible velocidad para
+determinar el trafico y que tan concurrida es cierta zona
+en diferentes horas, asi mismo emitir una señal cuando un
+carro va exediendo el limite de velocidad.
 
-Contar carros unando un sensor laser y un sensor de ultrasonido
-para registrar la posible velocidad de los carros y su posicion.
+Sensores a utilizar: Se utilizara un sensor laser para detectar
+la entidad (carro), y un sensor de ultrasonido para registrar
+la velocidad del vehiculo.
 
-El modelo entrenado calculara la velocidad de los carros en
-base a la distancia y el tiempo dando como resultado la velocidad
-aproximada.
+Se trabajaran datos masivos progresivos, lo que se se hara
+con la informacion sera detectar y marcar tendencias utilizando
+una inteligencia artifical y de ser posible
+evitarlas, transmitiendo a los conductores que utilicen
+rutas alternas para evitar exceso de trafico en determinadas horas
+del dia (ya registradas en el sistema).
 
-# Proyecto 2: Medidor de alcoholismo
-
-Usando un sensor de alcohol y un sensor de temperatura
-se medira el nivel de alcohol en la sangre de una persona
-y se le dara una recomendacion dependiendo de su nivel
-de alcohol en la sangre.
-
-# Proyecto 3: Presion arterial
+El modelo entrenado sera el encargado de determinar la velocidad de los
+carros con el sonido y en base a la distancia y el tiempo en el que llegan
+a los sensores, asi mismo la IA sera capaz de marcar las tendencias utilizando
+los datos mencionados con anterioridad,
