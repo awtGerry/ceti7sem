@@ -1,11 +1,11 @@
 % Obtener la imagen
-image = imread('../flower.jpeg');
+image = imread('~/Documents/ceti/ceti7sem/pdi/parrot.jpg');
 
 % Gray scale
 image = rgb2gray(image);
 
 % Definir el kernel laplaciano
-kernel = [
+hat_kernel = [
     0 0 1 0 0;
     0 1 2 1 0;
     1 2 -16 2 1;
@@ -13,8 +13,77 @@ kernel = [
     0 0 1 0 0
 ];
 
+% Definir el kernel
+box_kernel = [
+    0 0 0 0 0;
+    0 1 1 1 0;
+    0 1 1 1 0;
+    0 1 1 1 0;
+    0 0 0 0 0
+];
+
+% Definir la máscara de filtro gaussiano
+gauss_kernel = [
+    0 1 2 1 0;
+    1 3 5 3 1;
+    2 5 9 5 2;
+    1 3 5 3 1;
+    0 1 2 1 0
+];
+
+% Definir la máscara de filtro de suavizado (3x3)
+smooth_kernel = [
+    1 1 1;
+    1 1 1;
+    1 1 1
+];
+
+% Aplicar el filtro mexican hat
+mexican_hat = laplace(image, hat_kernel);
+% Mostrar la imagen original
+subplot(1, 2, 1);
+imshow(image);
+title('Original');
+% Mostrar la imagen con el filtro
+subplot(1, 2, 2);
+imshow(uint8(mexican_hat));
+title('Con filtro mexican hat');
+
+% Aplicar el filtro box
+box = box_filter(image, box_kernel);
+% Mostrar la imagen con el filtro
+figure;
+subplot(1, 2, 1);
+imshow(image);
+title('Original');
+subplot(1, 2, 2);
+imshow(uint8(box));
+title('Con filtro box');
+
+% Aplicar el filtro gaussiano
+gaussian = gaussian_filter(image, gauss_kernel);
+% Mostrar la imagen con el filtro
+figure;
+subplot(1, 2, 1);
+imshow(image);
+title('Original');
+subplot(1, 2, 2);
+imshow(uint8(gaussian));
+title('Con filtro gaussiano');
+
+% Aplicar el filtro de suavizado
+smooth = smooth_filter(image);
+% Mostrar la imagen con el filtro
+figure;
+subplot(1, 2, 1);
+imshow(image);
+title('Original');
+subplot(1, 2, 2);
+imshow(uint8(smooth));
+title('Con filtro de suavizado');
+
 % mexican hat filter function
-function mexican_hat = laplace(image)
+function mexican_hat = laplace(image, kernel)
     % Convertir la imagen a double
     image = double(image);
     % Obtener las dimensiones de la imagen
@@ -27,30 +96,8 @@ function mexican_hat = laplace(image)
     end
 end
 
-% Aplicar el filtro mexican hat
-mexican_hat = laplace(image);
-
-% Mostrar la imagen original
-subplot(1, 2, 1);
-imshow(image);
-title('Original');
-
-% Mostrar la imagen con el filtro
-subplot(1, 2, 2);
-imshow(uint8(mexican_hat));
-title('Con filtro mexican hat');
-
-% Definir el kernel
-kernel = [
-    0 0 0 0 0;
-    0 1 1 1 0;
-    0 1 1 1 0;
-    0 1 1 1 0;
-    0 0 0 0 0
-];
-
 % box filter function
-function box = box_filter(image)
+function box = box_filter(image, kernel)
     % Convertir la imagen a double
     image = double(image);
     % Obtener las dimensiones de la imagen
@@ -63,30 +110,8 @@ function box = box_filter(image)
     end
 end
 
-% Aplicar el filtro box
-box = box_filter(image);
-
-% Mostrar la imagen con el filtro
-figure;
-subplot(1, 2, 1);
-imshow(image);
-title('Original');
-
-subplot(1, 2, 2);
-imshow(uint8(box));
-title('Con filtro box');
-
-% Definir la máscara de filtro gaussiano
-kernel = [
-    0 1 2 1 0;
-    1 3 5 3 1;
-    2 5 9 5 2;
-    1 3 5 3 1;
-    0 1 2 1 0
-];
-
 % gaussian filter function
-function gaussian = gaussian_filter(image)
+function gaussian = gaussian_filter(image, kernel)
     % Convertir la imagen a double
     image = double(image);
     % Obtener las dimensiones de la imagen
@@ -98,26 +123,6 @@ function gaussian = gaussian_filter(image)
         end
     end
 end
-
-% Aplicar el filtro gaussiano
-gaussian = gaussian_filter(image);
-
-% Mostrar la imagen con el filtro
-figure;
-subplot(1, 2, 1);
-imshow(image);
-title('Original');
-
-subplot(1, 2, 2);
-imshow(uint8(gaussian));
-title('Con filtro gaussiano');
-
-% Definir la máscara de filtro de suavizado (3x3)
-kernel = [
-    1 1 1;
-    1 1 1;
-    1 1 1
-];
 
 % smooth filter function
 function smooth = smooth_filter(image)
@@ -132,16 +137,3 @@ function smooth = smooth_filter(image)
         end
     end
 end
-
-% Aplicar el filtro de suavizado
-smooth = smooth_filter(image);
-
-% Mostrar la imagen con el filtro
-figure;
-subplot(1, 2, 1);
-imshow(image);
-title('Original');
-
-subplot(1, 2, 2);
-imshow(uint8(smooth));
-title('Con filtro de suavizado');
