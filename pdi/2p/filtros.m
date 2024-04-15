@@ -1,32 +1,3 @@
-% Obtener la imagen
-image = imread('../flower.jpeg');
-
-% Gray scale
-image = rgb2gray(image);
-
-% Definir el kernel laplaciano
-kernel = [
-    0 0 1 0 0;
-    0 1 2 1 0;
-    1 2 -16 2 1;
-    0 1 2 1 0;
-    0 0 1 0 0
-];
-
-% mexican hat filter function
-function mexican_hat = laplace(image)
-    % Convertir la imagen a double
-    image = double(image);
-    % Obtener las dimensiones de la imagen
-    [x, y] = size(image);
-    for r=3:x-2
-        for c=3:y-2
-            % Aplicar la máscara
-            mexican_hat(r, c) = sum(sum(kernel .* image(r-2:r+2, c-2:c+2))) / 25;
-        end
-    end
-end
-
 % Aplicar el filtro mexican hat
 mexican_hat = laplace(image);
 
@@ -40,31 +11,8 @@ subplot(1, 2, 2);
 imshow(uint8(mexican_hat));
 title('Con filtro mexican hat');
 
-% Definir el kernel
-kernel = [
-    0 0 0 0 0;
-    0 1 1 1 0;
-    0 1 1 1 0;
-    0 1 1 1 0;
-    0 0 0 0 0
-];
-
-% box filter function
-function box = box_filter(image)
-    % Convertir la imagen a double
-    image = double(image);
-    % Obtener las dimensiones de la imagen
-    [x, y] = size(image);
-    for r=2:x-1
-        for c=2:y-1
-            % Aplicar la máscara
-            box(r, c) = sum(sum(kernel .* image(r-1:r+1, c-1:c+1))) / 25;
-        end
-    end
-end
-
 % Aplicar el filtro box
-box = box_filter(image);
+filter = box(image);
 
 % Mostrar la imagen con el filtro
 figure;
@@ -73,34 +21,11 @@ imshow(image);
 title('Original');
 
 subplot(1, 2, 2);
-imshow(uint8(box));
+imshow(uint8(filter));
 title('Con filtro box');
 
-% Definir la máscara de filtro gaussiano
-kernel = [
-    0 1 2 1 0;
-    1 3 5 3 1;
-    2 5 9 5 2;
-    1 3 5 3 1;
-    0 1 2 1 0
-];
-
-% gaussian filter function
-function gaussian = gaussian_filter(image)
-    % Convertir la imagen a double
-    image = double(image);
-    % Obtener las dimensiones de la imagen
-    [x, y] = size(image);
-    for r=3:x-2
-        for c=3:y-2
-            % Aplicar la máscara
-            gaussian(r, c) = sum(sum(kernel .* image(r-2:r+2, c-2:c+2))) / 25;
-        end
-    end
-end
-
 % Aplicar el filtro gaussiano
-gaussian = gaussian_filter(image);
+filter = gaussian(image);
 
 % Mostrar la imagen con el filtro
 figure;
@@ -109,32 +34,11 @@ imshow(image);
 title('Original');
 
 subplot(1, 2, 2);
-imshow(uint8(gaussian));
+imshow(uint8(filter));
 title('Con filtro gaussiano');
 
-% Definir la máscara de filtro de suavizado (3x3)
-kernel = [
-    1 1 1;
-    1 1 1;
-    1 1 1
-];
-
-% smooth filter function
-function smooth = smooth_filter(image)
-    % Convertir la imagen a double
-    image = double(image);
-    % Obtener las dimensiones de la imagen
-    [x, y] = size(image);
-    for r=2:x-1
-        for c=2:y-1
-            % Aplicar la máscara
-            smooth(r, c) = sum(sum(kernel .* image(r-1:r+1, c-1:c+1))) / 9;
-        end
-    end
-end
-
 % Aplicar el filtro de suavizado
-smooth = smooth_filter(image);
+filter = smooth(image);
 
 % Mostrar la imagen con el filtro
 figure;
@@ -143,5 +47,5 @@ imshow(image);
 title('Original');
 
 subplot(1, 2, 2);
-imshow(uint8(smooth));
+imshow(uint8(filter));
 title('Con filtro de suavizado');
