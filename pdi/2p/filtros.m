@@ -88,6 +88,8 @@ function mexican_hat = laplace(image, kernel)
     image = double(image);
     % Obtener las dimensiones de la imagen
     [x, y] = size(image);
+    % Liberar la memoria
+    mexican_hat = zeros(x, y);
     for r=3:x-2
         for c=3:y-2
             % Aplicar la máscara
@@ -102,6 +104,8 @@ function box = box_filter(image, kernel)
     image = double(image);
     % Obtener las dimensiones de la imagen
     [x, y] = size(image);
+    % Liberar la memoria
+    box = zeros(x, y);
     for r=2:x-1
         for c=2:y-1
             % Aplicar la máscara
@@ -116,6 +120,8 @@ function gaussian = gaussian_filter(image, kernel)
     image = double(image);
     % Obtener las dimensiones de la imagen
     [x, y] = size(image);
+    % Liberar la memoria
+    gaussian = zeros(x, y);
     for r=3:x-2
         for c=3:y-2
             % Aplicar la máscara
@@ -130,6 +136,8 @@ function smooth = smooth_filter(image)
     image = double(image);
     % Obtener las dimensiones de la imagen
     [x, y] = size(image);
+    % Liberar la memoria
+    smooth = zeros(x, y);
     for r=2:x-1
         for c=2:y-1
             % Aplicar la máscara
