@@ -3,41 +3,31 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Pixel extends JComponent {
-    private final BufferedImage bufferedPixel;
-    private BufferedImage bufferedImage;
+    private static BufferedImage bufferedImage;
+    private static BufferedImage bufferedPixel;
+    private static Pixel pixel;
 
     public Pixel(int width, int height) {
+        bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         bufferedPixel = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        pixel = this;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(bufferedPixel, 0, 0, this);
+        bufferedPixel.getGraphics().drawImage(bufferedImage, 0, 0, this);
     }
 
     /* metodo para dibujar un pixel en la pantalla */
-    public void drawPixel(int x, int y, Color color) {
-        // codigo para dibujar un pixel en la pantalla
-        bufferedPixel.setRGB(0, 0, color.getRGB());
-        if (bufferedImage != null) {
-            bufferedImage.getGraphics().drawImage(bufferedPixel, x, y, this);
-        } else {
-            // bufferedImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
-            // bufferedImage.getGraphics().drawImage(bufferedPixel, x, y, this);
-            getGraphics().drawImage(bufferedPixel, x, y, this);
+    public static void drawPixel(int x, int y, Color color) {
+        // si el pixel esta fuera de la pantalla, no hacer nada
+        if (x < 0 || x >= bufferedImage.getWidth() || y < 0 || y >= bufferedImage.getHeight()) {
+            return;
         }
-    }
-
-    /* metodo para dibujar una linea en la pantalla */
-    // y = mx + b
-    public void drawLine(int x1, int y1, int x2, int y2, Color color) {
-        // codigo para dibujar una linea en la pantalla
-        int dx = x2 - x1;
-        int dy = y2 - y1;
-        int steps = Math.max(Math.abs(dx), Math.abs(dy));
-        float xinc = dx / (float) steps;
-        float yinc = dy / (float) steps;
-        float x = x1;
-        float y = y1;
-        for (int i = 0; i <= steps; i++) {
-            drawPixel(Math.round(x), Math.round(y), color);
-            x += xinc;
-            y += yinc;
-        }
+        bufferedImage.setRGB(x, y, color.getRGB());
+        pixel.repaint();
     }
 }
