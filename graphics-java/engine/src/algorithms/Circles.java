@@ -126,4 +126,70 @@ public class Circles {
             }
         }
     }
+
+    /* metodo para dibujar un circulo en la pantalla usando mascara */
+    /* Basado en el algoritmo de Bresenham */
+    public static void drawMaskedCircle(int xc, int yc, int r, int mask, Color color) {
+        int x = 0;
+        int y = r;
+        int p = 1 * r;
+        while (x < y) {
+            if (p < 0) {
+                p += 2 * x + 3;
+            } else {
+                p += 2 * (x - y) + 5;
+                y--;
+            }
+            x++;
+            if (checkMask(x, mask)) {
+                Pixel.drawPixel(xc + x, yc + y, color);
+                Pixel.drawPixel(xc - x, yc + y, color);
+                Pixel.drawPixel(xc + x, yc - y, color);
+                Pixel.drawPixel(xc - x, yc - y, color);
+                Pixel.drawPixel(xc + y, yc + x, color);
+                Pixel.drawPixel(xc - y, yc + x, color);
+                Pixel.drawPixel(xc + y, yc - x, color);
+                Pixel.drawPixel(xc - y, yc - x, color);
+            }
+        }
+    }
+    private static boolean checkMask(int i, int mask) {
+        switch (mask) {
+            case 1: // Línea recta
+                return true;
+            case 2: // Línea discontinua
+                return i % 10 < 5; // Cambia el valor para ajustar la longitud de los segmentos
+            case 3: // Línea a puntos
+                return i % 5 == 0; // Cambia el valor para ajustar la distancia entre los puntos
+            default:
+                return true;
+        }
+    }
+
+    /* metodo para dibujar un circulo en la pantalla con un grosor */
+    // Basado en el algoritmo de Bresenham
+    public static void drawCircleWidth(int xc, int yc, int r, int width, Color color) {
+        int x = 0;
+        int y = r;
+        int p = 1 * r;
+        while (x < y) {
+            if (p < 0) {
+                p += 2 * x + 3;
+            } else {
+                p += 2 * (x - y) + 5;
+                y--;
+            }
+            x++;
+            for (int i = 0; i < width; i++) {
+                Pixel.drawPixel(xc + x, yc + y + i, color);
+                Pixel.drawPixel(xc - x, yc + y + i, color);
+                Pixel.drawPixel(xc + x, yc - y - i, color);
+                Pixel.drawPixel(xc - x, yc - y - i, color);
+                Pixel.drawPixel(xc + y, yc + x + i, color);
+                Pixel.drawPixel(xc - y, yc + x + i, color);
+                Pixel.drawPixel(xc + y, yc - x - i, color);
+                Pixel.drawPixel(xc - y, yc - x - i, color);
+            }
+        }
+    }
 }

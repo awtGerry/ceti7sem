@@ -3,8 +3,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Pixel extends JComponent {
-    private static BufferedImage bufferedImage;
-    private static BufferedImage bufferedPixel;
+    public static BufferedImage bufferedImage;
+    public static BufferedImage bufferedPixel;
     private static Pixel pixel;
 
     public Pixel(int width, int height) {
@@ -35,9 +35,14 @@ public class Pixel extends JComponent {
     public static void clear() {
         for (int i = 0; i < bufferedImage.getWidth(); i++) {
             for (int j = 0; j < bufferedImage.getHeight(); j++) {
-                bufferedImage.setRGB(i, j, Color.BLACK.getRGB());
+                bufferedImage.setRGB(i, j, Main.BG.getRGB());
             }
         }
         pixel.repaint();
+    }
+
+    /* metodo para obtener el pixel */
+    public static Color getPixel(int x, int y) {
+        return new Color(bufferedImage.getRGB(x, y));
     }
 }

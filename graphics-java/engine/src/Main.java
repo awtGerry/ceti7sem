@@ -5,6 +5,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 
 public class Main extends JPanel implements KeyListener {
+    public static final Color BG = Color.BLACK;
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("Pixel");
         Pixel pixel = new Pixel(800, 600);
@@ -32,7 +34,7 @@ public class Main extends JPanel implements KeyListener {
             Lines.drawBresenham(0, 300, 600, 300, Color.BLUE);
             Lines.drawMidPoint(0, 500, 600, 500, Color.GREEN);
         }
-        if (e.getKeyCode() == KeyEvent.VK_2) { // practica 06
+        if (e.getKeyCode() == KeyEvent.VK_2) { // practica 06-11
             Pixel.clear();
             // Draw rectangle
             Figures.drawRectangle(200, 400, 600, 500, Color.BLUE);
@@ -43,7 +45,7 @@ public class Main extends JPanel implements KeyListener {
             Circles.drawCircleBresenham(100, 300, 100, Color.MAGENTA);
             Circles.drawEllipse(400, 500, 100, 50, Color.YELLOW);
         }
-        if (e.getKeyCode() == KeyEvent.VK_3) { // figuras
+        if (e.getKeyCode() == KeyEvent.VK_3) { // figuras (practica 12)
             Pixel.clear();
             // 4 lines
             Lines.drawLine(10, 10, 100, 100, Color.RED);
@@ -63,6 +65,17 @@ public class Main extends JPanel implements KeyListener {
             Circles.drawEllipse(400, 400, 120, 30, Color.WHITE);
             Circles.drawEllipse(400, 400, 160, 50, Color.WHITE);
             Circles.drawEllipse(400, 400, 200, 70, Color.WHITE);
+        }
+        if (e.getKeyCode() == KeyEvent.VK_4) { // practica 13-15
+            Pixel.clear();
+            Lines.drawDDAMask(0, 100, 600, 100, 3, Color.RED); // Linea a puntos
+            Lines.drawDDAWidth(0, 200, 600, 200, 20, Color.WHITE); // Linea con grosor
+            Circles.drawMaskedCircle(100, 100, 50, 2, Color.GREEN); // Circulo discontinuo
+            Circles.drawCircleWidth(300, 300, 50, 20, Color.BLUE); // Circulo con grosor
+            Fill.scanline(400, 400, 600, 500, Color.YELLOW); // Relleno de figura
+            Figures.drawRectangle(100, 400, 300, 500, Color.CYAN); // Rectangulo
+            // Inundacion necesita un punto dentro de la figura a rellenar por eso se dibuja la figura primero
+            Fill.floodFill(200, 450, BG, Color.MAGENTA); // Relleno de figura
         }
     }
 

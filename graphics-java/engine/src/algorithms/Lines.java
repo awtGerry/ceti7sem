@@ -125,4 +125,60 @@ public class Lines {
             Pixel.drawPixel(Math.round(x), Math.round(y), color);
         }
     }
+
+    /* metodo para dibujar una linea en la pantalla usando el algoritmo DDA con máscara */
+    public static void drawDDAMask(int x1, int y1, int x2, int y2, int mask, Color color) {
+        float dx = x2 - x1;
+        float dy = y2 - y1;
+
+        float step = Math.abs(dx) > Math.abs(dy) ? Math.abs(dx) : Math.abs(dy);
+        float xInc = dx / step;
+        float yInc = dy / step;
+
+        float x = x1;
+        float y = y1;
+
+        for (int i = 0; i <= step; i++) {
+            if (checkMask(i, mask)) {
+                Pixel.drawPixel(Math.round(x), Math.round(y), color);
+            }
+            x += xInc;
+            y += yInc;
+        }
+    }
+    private static boolean checkMask(int i, int mask) {
+        switch (mask) {
+            case 1: // Línea recta
+                return true;
+            case 2: // Línea discontinua
+                return i % 10 < 5; // Cambia el valor para ajustar la longitud de los segmentos
+            case 3: // Línea a puntos
+                return i % 5 == 0; // Cambia el valor para ajustar la distancia entre los puntos
+            default:
+                return true;
+        }
+    }
+
+    /* metodo para dibujar una linea en la pantalla usando el algoritmo DDA con grosor */
+    public static void drawDDAWidth(int x1, int y1, int x2, int y2, int thickness, Color color) {
+        float dx = x2 - x1;
+        float dy = y2 - y1;
+
+        float step = Math.abs(dx) > Math.abs(dy) ? Math.abs(dx) : Math.abs(dy);
+        float xInc = dx / step;
+        float yInc = dy / step;
+
+        int x = x1;
+        int y = y1;
+
+        for (int i = 0; i <= step; i++) {
+            for (int j = -thickness/2; j <= thickness/2; j++) {
+                for (int k = -thickness/2; k <= thickness/2; k++) {
+                    Pixel.drawPixel(x + j, y + k, color);
+                }
+            }
+            x += xInc;
+            y += yInc;
+        }
+    }
 }
