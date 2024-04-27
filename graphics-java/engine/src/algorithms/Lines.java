@@ -1,7 +1,56 @@
 import java.awt.Color;
 
 public class Lines {
+    /* metodo para dibujar una linea en la pantalla */
+    // y = mx + b
     public static void drawLine(int x1, int y1, int x2, int y2, Color color) {
+        float m = (y2 - y1) / (x2 - x1);
+        float b = y1 - m * x1;
+
+        for (int x = x1; x <= x2; x++) {
+            int y = Math.round(m * x + b);
+            Pixel.drawPixel(x, y, color);
+        }
+    }
+
+    /* metodo para dibujar una linea en la pantalla mejorando el anterior */
+    public static void drawLine2(int x1, int y1, int x2, int y2, Color color) {
+        float dx = x2 - x1;
+        float dy = y2 - y1;
+
+        if (dx == 0) {
+            for (int y = y1; y <= y2; y++) {
+                Pixel.drawPixel(x1, y, color);
+            }
+            return;
+        }
+
+        if (dy == 0) {
+            for (int x = x1; x <= x2; x++) {
+                Pixel.drawPixel(x, y1, color);
+            }
+            return;
+        }
+
+        float m = dy / dx;
+        float b = y1 - m * x1;
+
+        if (Math.abs(dx) > Math.abs(dy)) {
+            for (int x = x1; x <= x2; x++) {
+                int y = Math.round(m * x + b);
+                Pixel.drawPixel(x, y, color);
+            }
+        } else {
+            for (int y = y1; y <= y2; y++) {
+                int x = Math.round((y - b) / m);
+                Pixel.drawPixel(x, y, color);
+            }
+        }
+    }
+
+
+    /* metodo para dibujar una linea en la pantalla usando el algoritmo DDA */
+    public static void drawDDA(int x1, int y1, int x2, int y2, Color color) {
         float dx = x2 - x1;
         float dy = y2 - y1;
 
@@ -55,7 +104,7 @@ public class Lines {
         }
     }
 
-    public static void drawMidpoint(int x1, int y1, int x2, int y2, Color color) {
+    public static void drawMidPoint(int x1, int y1, int x2, int y2, Color color) {
         float dx = x2 - x1;
         float dy = y2 - y1;
 
