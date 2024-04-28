@@ -1,0 +1,34 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[document]{ragged2e}
+\usepackage{amsfonts}
+\usepackage{natbib}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+
+\title{Circunferencia de coordenadas polares}
+\author{Victor Gerardo Rodríguez Barragán}
+\date{}
+
+\begin{document}
+\maketitle
+\justify
+
+El algoritmo de Sutherland-Hodgman se utiliza para recortar polígonos en los bordes de la región visible.
+Dada una lista de entrada de vértices que definen un polígono (por ejemplo, una fila de la matriz de caras),
+el algoritmo de Sutherland-Hodgman recorre cada vértice del polígono y si el vértice actual está dentro de la región visible,
+verificamos si el vértice anterior también está dentro.
+Si es la línea que une los dos puntos está completamente dentro y agregamos ambos puntos finales a una lista de salida
+que define el polígono recortado y pasamos al siguiente vértice en la lista de entrada.
+Si el vértice anterior no está dentro de la región visible, recortamos la línea usando el algoritmo de Cyrus-Beck y agregamos
+el punto recortado y el punto final actual a la lista de salida. Si el punto actual no está dentro de la región visible pero el anterior sí,
+recortamos la línea hasta el borde y agregamos el punto recortado a la lista de salida.
+Una vez que se han considerado todos los vértices de la lista de entrada, la lista de salida contiene la información del polígono recortado.
+
+\end{document}
