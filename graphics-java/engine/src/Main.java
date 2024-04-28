@@ -66,7 +66,7 @@ public class Main extends JPanel implements KeyListener {
             Circles.drawEllipse(400, 400, 160, 50, Color.WHITE);
             Circles.drawEllipse(400, 400, 200, 70, Color.WHITE);
         }
-        if (e.getKeyCode() == KeyEvent.VK_4) { // practica 13-15
+        if (e.getKeyCode() == KeyEvent.VK_4) { // practica 13-18
             Pixel.clear();
             Lines.drawDDAMask(0, 100, 600, 100, 3, Color.RED); // Linea a puntos
             Lines.drawDDAWidth(0, 200, 600, 200, 20, Color.WHITE); // Linea con grosor
@@ -76,6 +76,10 @@ public class Main extends JPanel implements KeyListener {
             Figures.drawRectangle(100, 400, 300, 500, Color.CYAN); // Rectangulo
             // Inundacion necesita un punto dentro de la figura a rellenar por eso se dibuja la figura primero
             Fill.floodFill(200, 450, BG, Color.MAGENTA); // Relleno de figura
+        }
+        if (e.getKeyCode() == KeyEvent.VK_5) { // practica 19-21
+            Pixel.clear();
+
         }
     }
 

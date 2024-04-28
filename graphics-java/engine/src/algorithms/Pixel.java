@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 public class Pixel extends JComponent {
     public static BufferedImage bufferedImage;
     public static BufferedImage bufferedPixel;
-    private static Pixel pixel;
+    public static Pixel pixel;
 
     public Pixel(int width, int height) {
         bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -38,6 +38,11 @@ public class Pixel extends JComponent {
                 bufferedImage.setRGB(i, j, Main.BG.getRGB());
             }
         }
+        pixel.repaint();
+    }
+
+    /* metodo para actualizar el pixel */
+    public static void refresh() {
         pixel.repaint();
     }
 
