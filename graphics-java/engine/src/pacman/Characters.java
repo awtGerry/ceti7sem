@@ -32,7 +32,8 @@ public class Characters {
         }
 
         public void draw() {
-            Fill.scanline(x - 7, y - 7, x + 7, y + 7, color);
+            // Fill.scanline(x - 7, y - 7, x + 7, y + 7, color);
+            Fill.scanline((int) x - 7, (int) y - 7, (int) x + 7, (int) y + 7, color);
         }
 
         public void update(float x, float y) {
@@ -79,20 +80,17 @@ public class Characters {
         }
 
         private boolean wallCollision(float x, float y) {
-            List<Wall> walls = getWalls();
-            for (Wall wall : walls) {
+            List<Walls> walls = List.of(Walls.getWalls());
+            for (Walls wall : walls) {
                 if (x >= wall.x1 && x <= wall.x2 && y >= wall.y1 && y <= wall.y2) {
                     if (direction == Direction.Up) {
-                        y -= 5;
-                    }
-                    if (direction == Direction.Down) {
-                        y += 5;
-                    }
-                    if (direction == Direction.Left) {
-                        x += 5;
-                    }
-                    if (direction == Direction.Right) {
-                        x -= 5;
+                        y = (float) wall.y2 + 1;
+                    } else if (direction == Direction.Down) {
+                        y = (float) wall.y1 - 1;
+                    } else if (direction == Direction.Left) {
+                        x = (float) wall.x2 + 1;
+                    } else if (direction == Direction.Right) {
+                        x = (float) wall.x1 - 1;
                     }
                     return true;
                 }

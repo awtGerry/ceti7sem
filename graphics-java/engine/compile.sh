@@ -1,4 +1,4 @@
-javac -d ./bin ./src/*.java ./src/algorithms/*.java
+javac -d ./bin ./src/*.java ./src/algorithms/*.java ./src/pacman/*.java
 # create variable to store the name of the file
 name=$1
 # Make only first letter uppercase

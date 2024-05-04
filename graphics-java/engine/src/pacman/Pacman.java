@@ -5,11 +5,14 @@ public class Pacman extends JPanel {
 
     public static int[] values;
 
+    public static final int WIDTH = 600;
+    public static final int HEIGHT = 600;
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("Translate Rectangle");
-        Pixel pixel = new Pixel(800, 600);
+        Pixel pixel = new Pixel(WIDTH, HEIGHT);
         frame.add(pixel);
-        frame.setSize(800, 600);
+        frame.setSize(WIDTH, HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -24,40 +27,43 @@ public class Pacman extends JPanel {
         values[3] = 200; // y2
 
         // Initial drawing of the rectangle
-        Figures.drawRectangle(values[0], values[1], values[2], values[3], color);
+        // Figures.drawRectangle(values[0], values[1], values[2], values[3], color);
+        
+        /* draw walls */
+        Walls.drawWalls();
 
         // Translation thread
-        Thread translationThread = new Thread(() -> {
-            int speed = 1; // Translation speed
-            while (true) {
-                try {
-                    Thread.sleep(10); // Delay for smooth animation
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        // Thread translationThread = new Thread(() -> {
+        //     int speed = 1; // Translation speed
+        //     while (true) {
+        //         try {
+        //             Thread.sleep(10); // Delay for smooth animation
+        //         } catch (InterruptedException e) {
+        //             e.printStackTrace();
+        //         }
+        //
+        //         // Translate the rectangle
+        //         float[] translated = Transformations.translate(values[0], values[1], speed, speed);
+        //         values[0] = (int) translated[0];
+        //         values[1] = (int) translated[1];
+        //         translated = Transformations.translate(values[2], values[3], speed, speed);
+        //         values[2] = (int) translated[0];
+        //         values[3] = (int) translated[1];
+        //
+        //         if (values[1] >= 800) { // Reset the rectangle's position if it reaches the end
+        //             values[0] = 100;
+        //             values[1] = 100;
+        //             values[2] = 200;
+        //             values[3] = 200;
+        //         }
+        //
+        //         // Clear the screen and redraw the rectangle at its new position
+        //         // Pixel.clear();
+        //         // Figures.drawRectangle(values[0], values[1], values[2], values[3], color);
+        //         // Pixel.refresh();
+        //     }
+        // });
 
-                // Translate the rectangle
-                float[] translated = Transformations.translate(values[0], values[1], speed, speed);
-                values[0] = (int) translated[0];
-                values[1] = (int) translated[1];
-                translated = Transformations.translate(values[2], values[3], speed, speed);
-                values[2] = (int) translated[0];
-                values[3] = (int) translated[1];
-
-                if (values[1] >= 800) { // Reset the rectangle's position if it reaches the end
-                    values[0] = 100;
-                    values[1] = 100;
-                    values[2] = 200;
-                    values[3] = 200;
-                }
-
-                // Clear the screen and redraw the rectangle at its new position
-                Pixel.clear();
-                Figures.drawRectangle(values[0], values[1], values[2], values[3], color);
-                Pixel.refresh();
-            }
-        });
-
-        translationThread.start();
+        // translationThread.start();
     }
 }

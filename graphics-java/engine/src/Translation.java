@@ -15,7 +15,7 @@ public class Translation {
         frame.setResizable(false);
         frame.setVisible(true);
 
-        Color color = Color.RED;
+        Color color = Color.BLUE;
 
         values = new int[4];
         values[0] = 0; // x1
