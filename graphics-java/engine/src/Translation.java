@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Pacman extends JPanel {
+public class Translation {
 
     public static int[] values;
 
