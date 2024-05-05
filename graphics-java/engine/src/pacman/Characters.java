@@ -32,8 +32,15 @@ public class Characters {
         }
 
         public void draw() {
-            // Fill.scanline(x - 7, y - 7, x + 7, y + 7, color);
             Fill.scanline((int) x - 7, (int) y - 7, (int) x + 7, (int) y + 7, color);
+            Circles.drawCircleMidPoint((int) x, (int) y-5, 7, color);
+            Fill.floodFill((int) x, (int) y, Color.BLACK, color);
+
+            // eyes
+            Circles.drawCircleMidPoint((int) x - 3, (int) y + 5, 2, Color.WHITE);
+            Circles.drawCircleMidPoint((int) x + 3, (int) y + 5, 2, Color.WHITE);
+            Fill.scanline((int) x - 3, (int) y + 4, (int) x - 1, (int) y + 6, Color.BLUE);
+            Fill.scanline((int) x + 3, (int) y + 4, (int) x + 5, (int) y + 6, Color.BLUE);
         }
 
         public void update(float x, float y) {
@@ -105,5 +112,124 @@ public class Characters {
         public float getY() {
             return y;
         }
+    }
+
+    public static class Pacman {
+        private float x;
+        private float y;
+        private Direction direction;
+        private float radius;
+
+        public Pacman(float x, float y, Direction direction, float radius) {
+            this.x = x;
+            this.y = y;
+            this.direction = direction;
+            this.radius = radius;
+        }
+
+        public void movePacman() {
+            switch (direction) {
+                case Up:
+                    x = x + 0;
+                    y = y + 2;
+                    break;
+                case Down:
+                    x = x + 0;
+                    y = y - 2;
+                    break;
+                case Left:
+                    x = x - 2;
+                    y = y + 0;
+                    break;
+                case Right:
+                    x = x + 2;
+                    y = y + 0;
+                    break;
+            }
+
+            if (wallCollision(x, y)) {
+                changeDirection();
+            }
+
+            if (x <= 1 && (y >= 290 && y <= 310)) {
+                x = 599;
+            }
+        }
+
+        private void changeDirection() {
+            Random rng = new Random();
+            Direction newDirection;
+            do {
+                newDirection = Direction.values()[rng.nextInt(4)];
+            } while (newDirection == direction);
+            direction = newDirection;
+        }
+
+        public void userChangeDirection(Direction direction) {
+            this.direction = direction;
+        }
+
+        public void draw(float mounth) {
+            Circles.drawCircleMidPoint((int) x, (int) y, (int) radius, Color.YELLOW);
+            Fill.floodFill((int) x, (int) y, Color.BLACK, Color.YELLOW);
+            switch (direction) {
+                case Up:
+                    Figures.fillTriangle((int) (x - mounth), (int) (y - radius), (int) (x + mounth), (int) (y - radius), (int) x, (int) y, Color.BLACK);
+                    break;
+                case Down:
+                    // add +1 because triangle doesn't fill all the circle
+                    Figures.fillTriangle((int) (x - mounth), (int) (y + radius + 1), (int) (x + mounth), (int) (y + radius + 1), (int) x, (int) y, Color.BLACK);
+                    break;
+                case Left:
+                    Figures.fillTriangle((int) (x - radius), (int) (y + mounth), (int) (x - radius), (int) (y - mounth), (int) x, (int) y, Color.BLACK);
+                    break;
+                case Right:
+                    Figures.fillTriangle((int) (x + radius), (int) (y + mounth), (int) (x + radius), (int) (y - mounth), (int) x, (int) y, Color.BLACK);
+                    break;
+            }
+        }
+
+        public float getX() {
+            return x;
+        }
+
+        public float getY() {
+            return y;
+        }
+
+        private boolean wallCollision(float x, float y) {
+            List<Walls> walls = List.of(Walls.getWalls());
+            for (Walls wall : walls) {
+                if (x >= wall.x1 && x <= wall.x2 && y >= wall.y1 && y <= wall.y2) {
+                    if (direction == Direction.Up) {
+                        y = y - 2;
+                    } else if (direction == Direction.Down) {
+                        y = y + 2;
+                    } else if (direction == Direction.Left) {
+                        x = x + 2;
+                    } else if (direction == Direction.Right) {
+                        x = x - 2;
+                    }
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void handleDeath(float increment) {
+            float[][] vertices = new float[2][3];
+            vertices[0] = new float[] { x - 5, y - 5, 0 };
+            vertices[1] = new float[] { x + 5, y + 5, 0 };
+            resizePacman(vertices, Color.YELLOW);
+        }
+
+        // Resize the pacman when it dies
+        private void resizePacman(float[][] vertices, Color color) {
+            float radius = (vertices[1][0] - vertices[0][0]) / 2;
+            // Fill.circle(x, y, radius, color);
+            Circles.drawCircleMidPoint((int) x, (int) y, (int) radius, color);
+            Fill.floodFill((int) x, (int) y, Color.BLACK, color);
+        }
+
     }
 }

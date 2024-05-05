@@ -35,7 +35,7 @@ public class Pixel extends JComponent {
     public static void clear() {
         for (int i = 0; i < bufferedImage.getWidth(); i++) {
             for (int j = 0; j < bufferedImage.getHeight(); j++) {
-                bufferedImage.setRGB(i, j, Main.BG.getRGB());
+                bufferedImage.setRGB(i, j, Color.BLACK.getRGB());
             }
         }
         pixel.repaint();

@@ -5,7 +5,7 @@ import java.util.Queue;
 
 public class Fill {
     /* metodo para rellenar una figura usando scanline */
-    // relleno a partir de una linea
+    // relleno a partir de una linea (buena para rectangulos: x1, y1, x2, y2)
     public static void scanline(int x1, int y1, int x2, int y2, Color color) {
         int y = y1;
         while (y <= y2) {
@@ -49,10 +49,6 @@ public class Fill {
                 if (Pixel.getPixel(x, y - 1).equals(target)) {
                     queue.add(new Point(x, y - 1));
                 }
-                /* queue.add(new Point(x + 1, y));
-                queue.add(new Point(x - 1, y));
-                queue.add(new Point(x, y + 1));
-                queue.add(new Point(x, y - 1)); */
             }
         }
     }

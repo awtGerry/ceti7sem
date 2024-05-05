@@ -38,72 +38,72 @@ public class Walls {
     }
 
     private static void ghostRectangle(Walls[] walls) {
-        walls[0] = new Walls(220, Pacman.WIDTH-270, 380, Pacman.WIDTH-260); // Left to right wall (bottom)
-        walls[1] = new Walls(220, Pacman.WIDTH-350, 230, Pacman.WIDTH-260); // Left to right wall (left)
-        walls[2] = new Walls(370, Pacman.WIDTH-350, 380, Pacman.WIDTH-260); // Left to right wall (right)
+        walls[0] = new Walls(220, Animation.WIDTH-270, 380, Animation.WIDTH-260); // Left to right wall (bottom)
+        walls[1] = new Walls(220, Animation.WIDTH-350, 230, Animation.WIDTH-260); // Left to right wall (left)
+        walls[2] = new Walls(370, Animation.WIDTH-350, 380, Animation.WIDTH-260); // Left to right wall (right)
     }
 
     private static void innerObstaclesBottom(Walls[] walls) {
         /* LEFT BOTTOM OBSTACLES */
-        walls[3] = new Walls(0, Pacman.HEIGHT-110, 50, Pacman.HEIGHT-100); // Left bottom obstacle
+        walls[3] = new Walls(0, Animation.HEIGHT-110, 50, Animation.HEIGHT-100); // Left bottom obstacle
 
-        walls[4] = new Walls(100, Pacman.HEIGHT-160, 110, Pacman.HEIGHT-100); // L shape
+        walls[4] = new Walls(100, Animation.HEIGHT-160, 110, Animation.HEIGHT-100); // L shape
 
-        walls[5] = new Walls(60, Pacman.HEIGHT-160, 110, Pacman.HEIGHT-150); // L shape
+        walls[5] = new Walls(60, Animation.HEIGHT-160, 110, Animation.HEIGHT-150); // L shape
 
         walls[6] = new Walls(50, 550, 250, 560); // Left middle obstacle
-        walls[7] = new Walls(160, Pacman.HEIGHT-110, 170, Pacman.HEIGHT-50); // Left middle obstacle
+        walls[7] = new Walls(160, Animation.HEIGHT-110, 170, Animation.HEIGHT-50); // Left middle obstacle
 
-        walls[8] = new Walls(160, Pacman.HEIGHT-270, 170, Pacman.HEIGHT-200); // Left middle obstacle
+        walls[8] = new Walls(160, Animation.HEIGHT-270, 170, Animation.HEIGHT-200); // Left middle obstacle
 
-        walls[9] = new Walls(160, Pacman.HEIGHT-160, 240, Pacman.HEIGHT-150); // left small wall
+        walls[9] = new Walls(160, Animation.HEIGHT-160, 240, Animation.HEIGHT-150); // left small wall
 
         /* MID BOTTOM OBSTACLES */
-        walls[10] = new Walls(300, Pacman.HEIGHT-210, 310, Pacman.HEIGHT-150); // T shape (top)
-        walls[11] = new Walls(300, Pacman.HEIGHT-210, 380, Pacman.HEIGHT-200); // T shape (top)
-        walls[12] = new Walls(220, Pacman.HEIGHT-210, 300, Pacman.HEIGHT-200); // T shape (top)
+        walls[10] = new Walls(300, Animation.HEIGHT-210, 310, Animation.HEIGHT-150); // T shape (top)
+        walls[11] = new Walls(300, Animation.HEIGHT-210, 380, Animation.HEIGHT-200); // T shape (top)
+        walls[12] = new Walls(220, Animation.HEIGHT-210, 300, Animation.HEIGHT-200); // T shape (top)
 
-        walls[13] = new Walls(300, Pacman.HEIGHT-110, 310, Pacman.HEIGHT-50); // T shape (bottom)
-        walls[14] = new Walls(300, Pacman.HEIGHT-110, 380, Pacman.HEIGHT-100); // T shape (bottom)
-        walls[15] = new Walls(220, Pacman.HEIGHT-110, 300, Pacman.HEIGHT-100); // T shape (bottom)
+        walls[13] = new Walls(300, Animation.HEIGHT-110, 310, Animation.HEIGHT-50); // T shape (bottom)
+        walls[14] = new Walls(300, Animation.HEIGHT-110, 380, Animation.HEIGHT-100); // T shape (bottom)
+        walls[15] = new Walls(220, Animation.HEIGHT-110, 300, Animation.HEIGHT-100); // T shape (bottom)
 
         /* RIGHT BOTTOM OBSTACLES */
-        walls[16] = new Walls(Pacman.WIDTH - 110, Pacman.HEIGHT-160, Pacman.WIDTH - 100, Pacman.WIDTH-100); // Right middle obstacle
-        walls[17] = new Walls(Pacman.WIDTH - 110, Pacman.HEIGHT-160, Pacman.WIDTH - 60, Pacman.HEIGHT-150); // Right middle obstacle
-        walls[18] = new Walls(Pacman.WIDTH - 50, Pacman.HEIGHT-110, Pacman.WIDTH, Pacman.HEIGHT-100); // Right bottom obstacle
+        walls[16] = new Walls(Animation.WIDTH - 110, Animation.HEIGHT-160, Animation.WIDTH - 100, Animation.WIDTH-100); // Right middle obstacle
+        walls[17] = new Walls(Animation.WIDTH - 110, Animation.HEIGHT-160, Animation.WIDTH - 60, Animation.HEIGHT-150); // Right middle obstacle
+        walls[18] = new Walls(Animation.WIDTH - 50, Animation.HEIGHT-110, Animation.WIDTH, Animation.HEIGHT-100); // Right bottom obstacle
 
-        walls[19] = new Walls(Pacman.WIDTH - 250, Pacman.HEIGHT-60, Pacman.WIDTH - 50, Pacman.HEIGHT-50); // Right middle obstacle
-        walls[20] = new Walls(Pacman.WIDTH - 170, Pacman.HEIGHT-110, Pacman.WIDTH - 160, Pacman.HEIGHT-50); // Right middle obstacle
+        walls[19] = new Walls(Animation.WIDTH - 250, Animation.HEIGHT-60, Animation.WIDTH - 50, Animation.HEIGHT-50); // Right middle obstacle
+        walls[20] = new Walls(Animation.WIDTH - 170, Animation.HEIGHT-110, Animation.WIDTH - 160, Animation.HEIGHT-50); // Right middle obstacle
 
-        walls[21] = new Walls(430, Pacman.HEIGHT-270, 440, Pacman.HEIGHT-200); // Right middle obstacle
+        walls[21] = new Walls(430, Animation.HEIGHT-270, 440, Animation.HEIGHT-200); // Right middle obstacle
 
-        walls[22] = new Walls(360, Pacman.HEIGHT-160, 440, Pacman.HEIGHT-150); // right small wall
+        walls[22] = new Walls(360, Animation.HEIGHT-160, 440, Animation.HEIGHT-150); // right small wall
 
     }
 
     private static void innerObstaclesTop(Walls[] walls) {
-        walls[23] = new Walls(300, Pacman.HEIGHT-600, 310, Pacman.HEIGHT-500); // Top T with outer wall
+        walls[23] = new Walls(300, Animation.HEIGHT-600, 310, Animation.HEIGHT-500); // Top T with outer wall
 
-        walls[24] = new Walls(230, Pacman.HEIGHT-460, 370, Pacman.HEIGHT-450); // Top T
-        walls[25] = new Walls(300, Pacman.HEIGHT-460, 310, Pacman.HEIGHT-400); // Top T
+        walls[24] = new Walls(230, Animation.HEIGHT-460, 370, Animation.HEIGHT-450); // Top T
+        walls[25] = new Walls(300, Animation.HEIGHT-460, 310, Animation.HEIGHT-400); // Top T
 
         /* LEFT */
-        walls[26] = new Walls(160, Pacman.HEIGHT-460, 170, Pacman.HEIGHT-340); // Mid inverted T
-        walls[27] = new Walls(160, Pacman.HEIGHT-410, 240, Pacman.HEIGHT-400); // Mid inverted T
+        walls[26] = new Walls(160, Animation.HEIGHT-460, 170, Animation.HEIGHT-340); // Mid inverted T
+        walls[27] = new Walls(160, Animation.HEIGHT-410, 240, Animation.HEIGHT-400); // Mid inverted T
 
-        walls[28] = new Walls(60, Pacman.HEIGHT-460, 110, Pacman.HEIGHT-450); // Little left wall
+        walls[28] = new Walls(60, Animation.HEIGHT-460, 110, Animation.HEIGHT-450); // Little left wall
 
-        walls[29] = new Walls(60, Pacman.HEIGHT-540, 110, Pacman.HEIGHT-500); // Rectangle 1
-        walls[30] = new Walls(160, Pacman.HEIGHT-540, 240, Pacman.HEIGHT-500); // Rectangle 2
+        walls[29] = new Walls(60, Animation.HEIGHT-540, 110, Animation.HEIGHT-500); // Rectangle 1
+        walls[30] = new Walls(160, Animation.HEIGHT-540, 240, Animation.HEIGHT-500); // Rectangle 2
 
         /* RIGHT */
-        walls[31] = new Walls(430, Pacman.HEIGHT-460, 440, Pacman.HEIGHT-340); // Mid inverted T
-        walls[32] = new Walls(360, Pacman.HEIGHT-410, 440, Pacman.HEIGHT-400); // Mid inverted T
+        walls[31] = new Walls(430, Animation.HEIGHT-460, 440, Animation.HEIGHT-340); // Mid inverted T
+        walls[32] = new Walls(360, Animation.HEIGHT-410, 440, Animation.HEIGHT-400); // Mid inverted T
 
-        walls[33] = new Walls(Pacman.WIDTH - 100, Pacman.HEIGHT-460, Pacman.WIDTH - 60, Pacman.HEIGHT-450); // Little right wall
+        walls[33] = new Walls(Animation.WIDTH - 100, Animation.HEIGHT-460, Animation.WIDTH - 60, Animation.HEIGHT-450); // Little right wall
 
-        walls[34] = new Walls(Pacman.WIDTH - 100, Pacman.HEIGHT-540, Pacman.WIDTH - 60, Pacman.HEIGHT-500); // Rectangle 1
-        walls[35] = new Walls(Pacman.WIDTH - 240, Pacman.HEIGHT-540, Pacman.WIDTH - 160, Pacman.HEIGHT-500); // Rectangle 2
+        walls[34] = new Walls(Animation.WIDTH - 100, Animation.HEIGHT-540, Animation.WIDTH - 60, Animation.HEIGHT-500); // Rectangle 1
+        walls[35] = new Walls(Animation.WIDTH - 240, Animation.HEIGHT-540, Animation.WIDTH - 160, Animation.HEIGHT-500); // Rectangle 2
     }
 
     private static void outside(Walls[] walls) {

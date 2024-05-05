@@ -1,9 +1,42 @@
-javac -d ./bin ./src/*.java ./src/algorithms/*.java ./src/pacman/*.java
-# create variable to store the name of the file
-name=$1
-# Make only first letter uppercase
-name=$(echo $name | tr '[:lower:]' '[:upper:]')
-# Make the rest of the letters lowercase
-name=$(echo ${name:0:1}$(echo $name | cut -c 2- | tr '[:upper:]' '[:lower:]'))
-# Run the program
-java -cp ./bin $name
+args="$1"
+
+# Compile the program if args is -c
+if [ "$args" == "-c" ]; then
+    echo "Compiling..."
+    javac -d bin src/*.java src/algorithms/*.java src/pacman/*.java
+    echo "Done."
+fi
+
+# Run the program if args is -r
+if [ "$args" == "-r" ]; then
+    echo "Running..."
+    if [ "$2" == "main" ]; then
+        java -cp bin Main
+    elif [ "$2" == "pacman" ]; then
+        java -cp bin Animation
+    else
+        echo "Invalid argument."
+    fi
+fi
+
+# Clean the bin directory if args is -t
+if [ "$args" == "-t" ]; then
+    echo "Cleaning..."
+    rm -rf bin/*
+    echo "Done."
+fi
+
+# Compile and run the program if args is -cr
+if [ "$args" == "-cr" ]; then
+    echo "Compiling..."
+    javac -d bin src/*.java src/algorithms/*.java src/pacman/*.java
+    echo "Done."
+    echo "Running..."
+    if [ "$2" == "main" ]; then
+        java -cp bin Main
+    elif [ "$2" == "pacman" ]; then
+        java -cp bin Animation
+    else
+        echo "Invalid argument."
+    fi
+fi

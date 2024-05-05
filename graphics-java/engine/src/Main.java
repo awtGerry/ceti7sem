@@ -77,9 +77,11 @@ public class Main extends JPanel implements KeyListener {
             // Inundacion necesita un punto dentro de la figura a rellenar por eso se dibuja la figura primero
             Fill.floodFill(200, 450, BG, Color.MAGENTA); // Relleno de figura
         }
-        if (e.getKeyCode() == KeyEvent.VK_5) { // practica 19-21
+        if (e.getKeyCode() == KeyEvent.VK_5) { // relleno circulo y triangulo
             Pixel.clear();
-
+            Figures.fillTriangle(100, 100, 200, 100, 150, 200, Color.GREEN);
+            Circles.drawCircleMidPoint(400, 150, 50, Color.RED);
+            Fill.floodFill(400, 150, BG, Color.RED);
         }
     }
 
