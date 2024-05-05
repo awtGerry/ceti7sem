@@ -8,12 +8,16 @@ import java.awt.image.BufferedImage;
 import java.awt.event.ActionEvent;
 
 public class Animation extends JPanel implements KeyListener {
+
     public static int[] values;
 
     public static final int WIDTH = 600;
     public static final int HEIGHT = 600;
 
     public static boolean hit_ghost = false;
+
+    private static BufferedImage offScreenImage;
+    private static Graphics2D offScreenGraphics;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Translate Rectangle");
@@ -30,10 +34,8 @@ public class Animation extends JPanel implements KeyListener {
         /* Variables */
         AtomicReference<Float> radius = new AtomicReference<>(12.0f);
         AtomicReference<Float> increment = new AtomicReference<>(0.0f);
-        AtomicReference<Float> timer = new AtomicReference<>(0.0f);
 
-        final int fixedSleepTime = 10; // milliseconds
-
+        int timer = 100; // sleep timer
         AtomicReference<Float> pacman_timer = new AtomicReference<>(0.0f);
         AtomicReference<Integer> pacman_death_increment = new AtomicReference<>(0);
 
@@ -63,18 +65,21 @@ public class Animation extends JPanel implements KeyListener {
                 consumed_pellets.add(pellet);
             }
         }
+        
+        /* Draw walls outside the threads */
+        Walls.drawWalls();
+
+        offScreenImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        offScreenGraphics = offScreenImage.createGraphics();
 
         // Translation thread
         Thread translationThread = new Thread(() -> {
             while (true) {
-                // Temporary buffer to store drawing operations
-                ArrayList<Runnable> drawingOperations = new ArrayList<>();
-
                 // Clear the screen and redraw the rectangle at its new position
-                drawingOperations.add(() -> Pixel.clear());
+                Pixel.clear();
 
                 try {
-                    Thread.sleep(fixedSleepTime);
+                    Thread.sleep(timer);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -82,11 +87,11 @@ public class Animation extends JPanel implements KeyListener {
                 if (radius.get() < 5.0f) { radius.set(12.0f); }
                 if (increment.get() > 0.6f) { increment.set(0.0f); }
 
-                // Move the ghosts
-                drawingOperations.add(() -> ghosts[0].moveGhost());
-                if (timer.get() >= 2.5f) { drawingOperations.add(() -> ghosts[2].moveGhost()); }
-                if (timer.get() >= 5.0f) { drawingOperations.add(() -> ghosts[1].moveGhost()); }
-                if (timer.get() >= 7.5f) { drawingOperations.add(() -> ghosts[3].moveGhost()); }
+                // move the gosts
+                ghosts[0].moveGhost();
+                if (timer >= 2.5f) { ghosts[2].moveGhost(); }
+                if (timer >= 5.0f) { ghosts[1].moveGhost(); }
+                if (timer >= 7.5f) { ghosts[3].moveGhost(); }
 
                 for (Characters.Ghost ghost : ghosts) {
                     if (isCollision(pacman, ghost)) {
@@ -102,34 +107,30 @@ public class Animation extends JPanel implements KeyListener {
                     } else {
                         pacman_death_increment.set(pacman_death_increment.get() - 1);
                     }
-                    Walls.drawWalls();
                 } else {
-                  drawingOperations.add(() -> pacman.movePacman());
-                  drawingOperations.add(() -> pacman.draw(radius.get()));
+                    pacman.movePacman();
+                    pacman.draw(radius.get());
+                    for (Characters.Ghost ghost : ghosts) {
+                        ghost.draw();
+                    }
 
-                  for (Characters.Ghost ghost : ghosts) {
-                    drawingOperations.add(() -> ghost.draw());
-                  }
+                    Pellets.drawSmallPellet(Characters.Pacman.getX(), Characters.Pacman.getY(), consumed_pellets);
+                    // Pellets.bigPellet((float) 25.0, (float) 493.0, (float) 45.0, (float) 513.0, increment.get());
+                    // Pellets.bigPellet((float) 575.0, (float) 493.0, (float) 595.0, (float) 513.0, increment.get());
+                    // Pellets.bigPellet((float) 25.0, (float) 140.0, (float) 45.0, (float) 160.0, increment.get());
+                    // Pellets.bigPellet((float) 575.0, (float) 140.0, (float) 595.0, (float) 160.0, increment.get());
 
-                  drawingOperations.add(() -> Walls.drawWalls());
-
-                  drawingOperations.add(() -> Pellets.drawSmallPellet(Characters.Pacman.getX(), Characters.Pacman.getY(), consumed_pellets));
-                  drawingOperations.add(() -> Pellets.bigPellet((float) 25.0, (float) 493.0, (float) 26.0, (float) 494.0, increment.get()));
-                  // Pellets.bigPellet((float) 575.0, (float) 493.0, (float) 595.0, (float) 513.0, increment.get());
-                  // Pellets.bigPellet((float) 25.0, (float) 140.0, (float) 45.0, (float) 160.0, increment.get());
-                  // Pellets.bigPellet((float) 575.0, (float) 140.0, (float) 595.0, (float) 160.0, increment.get());
+                    Walls.drawWalls();
                 }
-
+                // radius -= 2.5;
+                // increment += 0.1;
+                // timer += 0.01;
                 radius.set(radius.get() - 2.5f);
                 increment.set(increment.get() + 0.1f);
-                timer.set(timer.get() + 0.1f);
-
-                // Execute all drawing operations at once
-                for (Runnable operation : drawingOperations) {
-                    operation.run();
-                }
-          }
+                // timer += 0.01;
+            }
         });
+
         translationThread.start();
     }
 
@@ -150,6 +151,8 @@ public class Animation extends JPanel implements KeyListener {
             Characters.Pacman.userChangeDirection(Characters.Direction.Right);
         } else if (key == KeyEvent.VK_UP) {
             Characters.Pacman.userChangeDirection(Characters.Direction.Up);
+        } else if (key == KeyEvent.VK_DOWN) {
+            Characters.Pacman.userChangeDirection(Characters.Direction.Down);
         } else if (key == KeyEvent.VK_DOWN) {
             Characters.Pacman.userChangeDirection(Characters.Direction.Down);
         }

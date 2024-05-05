@@ -33,11 +33,7 @@ public class Pixel extends JComponent {
 
     /* metodo para limpiar la pantalla */
     public static void clear() {
-        for (int i = 0; i < bufferedImage.getWidth(); i++) {
-            for (int j = 0; j < bufferedImage.getHeight(); j++) {
-                bufferedImage.setRGB(i, j, Color.BLACK.getRGB());
-            }
-        }
+        bufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
         pixel.repaint();
     }
 

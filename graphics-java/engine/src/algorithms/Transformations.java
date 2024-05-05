@@ -36,7 +36,7 @@ public class Transformations
         }
 
         return new float[] {v2[0], v2[1]};
-    }
+    } */
 
     public static float[] scale(float x, float y, float sx, float sy)
     {
@@ -54,5 +54,5 @@ public class Transformations
         }
 
         return new float[] {v2[0], v2[1]};
-    } */
+    }
 }

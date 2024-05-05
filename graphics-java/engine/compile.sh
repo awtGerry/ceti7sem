@@ -36,6 +36,8 @@ if [ "$args" == "-cr" ]; then
         java -cp bin Main
     elif [ "$2" == "pacman" ]; then
         java -cp bin Animation
+    elif [ "$2" == "scalation" ]; then
+        java -cp bin Scalation
     else
         echo "Invalid argument."
     fi

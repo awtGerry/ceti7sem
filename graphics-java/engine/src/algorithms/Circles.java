@@ -192,4 +192,31 @@ public class Circles {
             }
         }
     }
+
+    // Fill a circle using the scanline algorithm
+    public static void fillCircle(int xc, int yc, int r, Color color) {
+        int x = 0;
+        int y = r;
+        int p = 1 - r;
+        
+        while (x <= y) {
+            // Draw horizontal lines between pairs of intersection points
+            for (int i = xc - x; i <= xc + x; i++) {
+                Pixel.drawPixel(i, yc + y, color);
+                Pixel.drawPixel(i, yc - y, color);
+            }
+            for (int i = xc - y; i <= xc + y; i++) {
+                Pixel.drawPixel(i, yc + x, color);
+                Pixel.drawPixel(i, yc - x, color);
+            }
+
+            if (p < 0) {
+                p += 2 * x + 3;
+            } else {
+                p += 2 * (x - y) + 5;
+                y--;
+            }
+            x++;
+        }
+    }
 }

@@ -33,14 +33,13 @@ public class Characters {
 
         public void draw() {
             Fill.scanline((int) x - 7, (int) y - 7, (int) x + 7, (int) y + 7, color);
-            Circles.drawCircleMidPoint((int) x, (int) y-5, 7, color);
-            Fill.floodFill((int) x, (int) y, Color.BLACK, color);
+            Circles.fillCircle((int) x, (int) y - 5, 7, color);
 
             // eyes
-            Circles.drawCircleMidPoint((int) x - 3, (int) y + 5, 2, Color.WHITE);
-            Circles.drawCircleMidPoint((int) x + 3, (int) y + 5, 2, Color.WHITE);
-            Fill.scanline((int) x - 3, (int) y + 4, (int) x - 1, (int) y + 6, Color.BLUE);
-            Fill.scanline((int) x + 3, (int) y + 4, (int) x + 5, (int) y + 6, Color.BLUE);
+            Circles.fillCircle((int) x - 3, (int) y - 5, 2, Color.WHITE);
+            Circles.fillCircle((int) x + 3, (int) y - 5, 2, Color.WHITE);
+            Fill.scanline((int) x - 4, (int) y - 6, (int) x - 3, (int) y - 4, Color.BLUE);
+            Fill.scanline((int) x + 3, (int) y - 6, (int) x + 4, (int) y - 4, Color.BLUE);
         }
 
         public void update(float x, float y) {
@@ -56,18 +55,18 @@ public class Characters {
             switch (direction) {
                 case Up:
                     x = x + 0;
-                    y = y + 2;
+                    y = y + 3;
                     break;
                 case Down:
                     x = x + 0;
-                    y = y - 2;
+                    y = y - 3;
                     break;
                 case Left:
-                    x = x - 2;
+                    x = x - 3;
                     y = y + 0;
                     break;
                 case Right:
-                    x = x + 2;
+                    x = x + 3;
                     y = y + 0;
                     break;
             }
@@ -89,15 +88,15 @@ public class Characters {
         private boolean wallCollision(float x, float y) {
             List<Walls> walls = List.of(Walls.getWalls());
             for (Walls wall : walls) {
-                if (x >= wall.x1 && x <= wall.x2 && y >= wall.y1 && y <= wall.y2) {
-                    if (direction == Direction.Up) {
-                        y = (float) wall.y2 + 1;
+                if (x >= wall.x1 && x <= wall.x2 && y >= wall.y1 && y <= wall.y2) { // collision
+                    if (direction == Direction.Up) { // move ghost away from wall
+                        y = (float) wall.y2 - 3;
                     } else if (direction == Direction.Down) {
-                        y = (float) wall.y1 - 1;
+                        y = (float) wall.y1 + 3;
                     } else if (direction == Direction.Left) {
-                        x = (float) wall.x2 + 1;
+                        x = (float) wall.x2 + 3;
                     } else if (direction == Direction.Right) {
-                        x = (float) wall.x1 - 1;
+                        x = (float) wall.x1 - 3;
                     }
                     return true;
                 }
@@ -115,9 +114,9 @@ public class Characters {
     }
 
     public static class Pacman {
-        private float x;
-        private float y;
-        private Direction direction;
+        public static float x;
+        public static float y;
+        private static Direction direction;
         private float radius;
 
         public Pacman(float x, float y, Direction direction, float radius) {
@@ -131,18 +130,18 @@ public class Characters {
             switch (direction) {
                 case Up:
                     x = x + 0;
-                    y = y + 2;
+                    y = y - 1;
                     break;
                 case Down:
                     x = x + 0;
-                    y = y - 2;
+                    y = y + 1;
                     break;
                 case Left:
-                    x = x - 2;
+                    x = x - 1;
                     y = y + 0;
                     break;
                 case Right:
-                    x = x + 2;
+                    x = x + 1;
                     y = y + 0;
                     break;
             }
@@ -165,8 +164,8 @@ public class Characters {
             direction = newDirection;
         }
 
-        public void userChangeDirection(Direction direction) {
-            this.direction = direction;
+        public static void userChangeDirection(Direction direction) {
+            Pacman.direction = direction;
         }
 
         public void draw(float mounth) {
@@ -189,11 +188,11 @@ public class Characters {
             }
         }
 
-        public float getX() {
+        public static float getX() {
             return x;
         }
 
-        public float getY() {
+        public static float getY() {
             return y;
         }
 
@@ -202,13 +201,13 @@ public class Characters {
             for (Walls wall : walls) {
                 if (x >= wall.x1 && x <= wall.x2 && y >= wall.y1 && y <= wall.y2) {
                     if (direction == Direction.Up) {
-                        y = y - 2;
+                        y = y - 3;
                     } else if (direction == Direction.Down) {
-                        y = y + 2;
+                        y = y + 3;
                     } else if (direction == Direction.Left) {
-                        x = x + 2;
+                        x = x + 3;
                     } else if (direction == Direction.Right) {
-                        x = x - 2;
+                        x = x - 3;
                     }
                     return true;
                 }
