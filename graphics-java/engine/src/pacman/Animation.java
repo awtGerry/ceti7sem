@@ -32,7 +32,7 @@ public class Animation extends JPanel implements KeyListener {
         AtomicReference<Float> increment = new AtomicReference<>(0.0f);
         AtomicReference<Float> timer = new AtomicReference<>(0.0f);
 
-        final int fixedSleepTime = 10; // milliseconds
+        final int fixedSleepTime = 15; // milliseconds
 
         AtomicReference<Float> pacman_timer = new AtomicReference<>(0.0f);
         AtomicReference<Integer> pacman_death_increment = new AtomicReference<>(0);

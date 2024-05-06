@@ -90,13 +90,13 @@ public class Characters {
             for (Walls wall : walls) {
                 if (x >= wall.x1 && x <= wall.x2 && y >= wall.y1 && y <= wall.y2) { // collision
                     if (direction == Direction.Up) { // move ghost away from wall
-                        y = (float) wall.y2 - 3;
+                        y = (float) wall.y2 + 2;
                     } else if (direction == Direction.Down) {
-                        y = (float) wall.y1 + 3;
+                        y = (float) wall.y1 - 2;
                     } else if (direction == Direction.Left) {
-                        x = (float) wall.x2 + 3;
+                        x = (float) wall.x2 + 2;
                     } else if (direction == Direction.Right) {
-                        x = (float) wall.x1 - 3;
+                        x = (float) wall.x1 - 2;
                     }
                     return true;
                 }
@@ -201,13 +201,13 @@ public class Characters {
             for (Walls wall : walls) {
                 if (x >= wall.x1 && x <= wall.x2 && y >= wall.y1 && y <= wall.y2) {
                     if (direction == Direction.Up) {
-                        y = y - 3;
+                        y = y + 2;
                     } else if (direction == Direction.Down) {
-                        y = y + 3;
+                        y = y - 2;
                     } else if (direction == Direction.Left) {
-                        x = x + 3;
+                        x = x + 2;
                     } else if (direction == Direction.Right) {
-                        x = x - 3;
+                        x = x - 2;
                     }
                     return true;
                 }
