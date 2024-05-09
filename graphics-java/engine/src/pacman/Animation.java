@@ -114,7 +114,7 @@ public class Animation extends JPanel implements KeyListener {
                   drawingOperations.add(() -> Walls.drawWalls());
 
                   drawingOperations.add(() -> Pellets.drawSmallPellet(Characters.Pacman.getX(), Characters.Pacman.getY(), consumed_pellets));
-                  drawingOperations.add(() -> Pellets.bigPellet((float) 25.0, (float) 493.0, (float) 26.0, (float) 494.0, increment.get()));
+                  // drawingOperations.add(() -> Pellets.bigPellet((float) 25.0, (float) 493.0, (float) 26.0, (float) 494.0, increment.get()));
                   // Pellets.bigPellet((float) 575.0, (float) 493.0, (float) 595.0, (float) 513.0, increment.get());
                   // Pellets.bigPellet((float) 25.0, (float) 140.0, (float) 45.0, (float) 160.0, increment.get());
                   // Pellets.bigPellet((float) 575.0, (float) 140.0, (float) 595.0, (float) 160.0, increment.get());
