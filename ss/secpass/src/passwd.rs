@@ -1,15 +1,16 @@
-pub mod passwd {
-    pub struct User {
-        pub username: String,
-        pub password: String,
-    }
+use crate::db;
+use bcrypt;
 
-    impl User {
-        pub fn new(username: &str, password: &str) -> User {
-            User {
-                username: username.to_string(),
-                password: password.to_string(),
-            }
+pub struct User {
+    pub username: String,
+    pub password: String,
+}
+
+impl User {
+    pub fn new(username: &str, password: &str) -> User {
+        User {
+            username: username.to_string(),
+            password: password.to_string(),
         }
     }
 }
@@ -23,6 +24,10 @@ pub enum PasswordError {
     NoSpecial,
 }
 
+// Function to check if the password meets the requirements
+// This function is called in the frontend to check if the password is valid
+// If is not valid, it will return an error with the reason and in the frontend
+// the user will see the error message and never call the register_user function
 pub fn check_password(password: &str) -> Result<(), PasswordError> {
     let mut has_uppercase = false;
     let mut has_lowercase = false;
@@ -60,4 +65,56 @@ pub fn check_password(password: &str) -> Result<(), PasswordError> {
     }
 
     Ok(())
+}
+
+// Function to register a user in the database
+// Here the password will be hashed and that hash will be stored in the database
+pub fn register_user(username: &str, password: &str) {
+    let user = User::new(username, password);
+
+    let hashed_password = bcrypt::hash(&user.password, bcrypt::DEFAULT_COST).unwrap();
+    let conn = db::create_db();
+    db::insert_user(&conn, &user.username, &hashed_password);
+    println!("{:#?}", get_all_users());
+}
+
+// Function to login a user
+// Here the password will be hashed and that hash will be compared with the hash stored in the database
+#[allow(unused)]
+pub fn login_user(username: &str, password: &str) -> bool {
+    let user = User::new(username, password);
+
+    let conn = db::create_db();
+    let query = format!(
+        "SELECT * FROM users WHERE username = '{}';",
+        user.username
+    );
+
+    let mut found = false;
+    conn.iterate(query, |pairs| {
+        let mut user = User::new("", "");
+        for &(column, value) in pairs.iter() {
+            match column {
+                "username" => user.username = String::from(value.unwrap()),
+                "password" => user.password = String::from(value.unwrap()),
+                _ => (),
+            }
+        }
+
+        if user.username == username {
+            let hashed_password = bcrypt::hash(&user.password, bcrypt::DEFAULT_COST).unwrap();
+            if hashed_password == user.password {
+                found = true;
+            }
+        }
+
+        true
+    }).unwrap();
+
+    found
+}
+
+fn get_all_users() {
+    let conn = db::create_db();
+    db::get_all_users(&conn);
 }

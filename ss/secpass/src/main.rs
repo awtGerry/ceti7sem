@@ -9,7 +9,11 @@
    decryption of the password.
 */
 
-#[allow(unused_imports)]
+mod passwd;
+mod db;
+
+use crate::passwd::User;
+
 use iced::widget::{
     column,
     row,
@@ -17,18 +21,11 @@ use iced::widget::{
     Container,
     container,
     image,
-    Image,
     checkbox,
     TextInput,
     text,
 };
-
-use iced::window;
-use iced::Application;
-use iced::{Theme, Command, Settings, Element};
-
-mod passwd;
-use crate::passwd::passwd::User;
+use iced::{Theme, Command, Settings, Element, window, Application};
 
 fn main() -> iced::Result {
     SecPassApp::run(Settings {
@@ -40,10 +37,6 @@ fn main() -> iced::Result {
             resizable: false,
             ..window::Settings::default()
         },
-        /* fonts: vec![include_bytes!("../fonts/icon-font.ttf")
-            .as_slice()
-            .into()
-        ], */
         ..Settings::default()
     })
 }
@@ -52,12 +45,14 @@ struct SecPassApp {
     user_value: String,
     input_value: String,
     error_msg: String,
+    show_password: bool,
 }
 
 #[derive(Debug, Clone)]
 enum App {
     UserChanged(String),
     PasswordChanged(String),
+    ToggleShowPassword(bool),
     Login,
     Register,
 }
@@ -75,6 +70,7 @@ impl Application for SecPassApp {
                 user_value: String::new(),
                 input_value: String::new(),
                 error_msg: String::new(),
+                show_password: false,
             },
             Command::none()
         )
@@ -94,7 +90,14 @@ impl Application for SecPassApp {
                 self.input_value = value;
                 Command::none()
             }
+            App::ToggleShowPassword(show) => {
+                self.show_password = show;
+                Command::none()
+            }
             App::Login => {
+                Command::none()
+            }
+            App::Register => {
                 let user = User::new(&self.user_value, &self.input_value);
                 if let Err(e) = passwd::check_password(&user.password) {
                     match e {
@@ -116,11 +119,9 @@ impl Application for SecPassApp {
                     }
                 } else {
                     self.error_msg = String::from("");
-                    println!("User: {}, Password: {}", user.username, user.password);
+                    passwd::register_user(&user.username, &user.password);
+                    println!("User {} registered", user.username);
                 }
-                Command::none()
-            }
-            App::Register => {
                 Command::none()
             }
         }
@@ -130,7 +131,7 @@ impl Application for SecPassApp {
         let header = {
             column![
                 call_image("cat.png", 240),
-                text("Login to your account")
+                text("Register your account")
                     .size(24)
                     .width(iced::Length::Fill)
                     .horizontal_alignment(iced::alignment::Horizontal::Center)
@@ -140,40 +141,47 @@ impl Application for SecPassApp {
         let user_fields = {
             let user_input = TextInput::new("󰁥  Enter email", &self.user_value)
                 .on_input(App::UserChanged)
-                .width(460)
+                .width(480)
                 .padding(10);
             let passwd_input = TextInput::new("  Enter password", &self.input_value)
-                .secure(true)
+                .secure(if self.show_password { false } else { true })
                 .on_input(App::PasswordChanged)
-                .width(460)
+                .width(480)
                 .padding(10);
-            let error_msg = text(&self.error_msg).style(iced::Color::from_rgb8(210, 15, 57)).size(12);
+
+            let check = {
+                checkbox("Show password", self.show_password)
+                    .on_toggle(App::ToggleShowPassword)
+            };
+            let error_msg = text(&self.error_msg).style(iced::Color::from_rgb8(210, 15, 57)).size(14);
 
             // Separate the inputs with a 20px space between them
             let inputs = column![ user_input, passwd_input ].spacing(20);
+            // Put the error message below the inputs
+            let msg_container = row![check, error_msg].spacing(10);
 
             column![
                 inputs,
-                error_msg
-            ].spacing(5)
+                msg_container
+            ].spacing(10)
         };
 
-        let login_button = {
+        let register_button = {
             column![
-                button("Login")
+                button("Register")
                     .on_press_maybe(
                         if self.user_value.is_empty() || self.input_value.is_empty() {
                             None
                         } else {
-                            Some(App::Login)
+                            Some(App::Register)
                         }
                     )
-                    .width(460)
+                    .width(480)
                     .padding([10, 20]),
 
-                button("Don't have an account? Sign up")
-                    .on_press(App::Register)
-                    .width(460)
+                button("Already have an account? Login")
+                    .on_press(App::Login)
+                    .width(480)
                     .style(iced::theme::Button::Text)
             ].spacing(5)
         };
@@ -181,7 +189,7 @@ impl Application for SecPassApp {
         let content = column![
                 header,
                 user_fields,
-                login_button
+                register_button
         ]
         .padding(20)
         .spacing(20)
@@ -202,8 +210,3 @@ fn call_image<'a>(file_name: &str, width: u16) -> Container<'a, App> {
         .width(iced::Length::Fill)
         .center_x()
 }
-
-/* fn icon<'a>(codepoint: char) -> Element<'a, App> {
-    const ICON_FONT: Font = Font::with_name("icon-font");
-    text(codepoint).font(ICON_FONT).into()
-} */
