@@ -79,7 +79,7 @@ impl Application for SecPassApp {
                 text("Login")
                     .width(iced::Length::Fill)
                     .size(32)
-                    .style(iced::Color::from([0.5, 0.5, 0.5]))
+                    .style(iced::Color::from_rgb(227.0, 253.0, 253.0))
                     .horizontal_alignment(iced::alignment::Horizontal::Center),
             ].spacing(20)
         };
@@ -87,11 +87,12 @@ impl Application for SecPassApp {
         let inputs = {
             let user_input = TextInput::new("󰁥 Enter email", &self.user_value)
                 .on_input(App::UserChanged)
-                .width(300)
+                .width(500)
                 .padding(10);
             let passwd_input = TextInput::new(" Enter password", &self.input_value)
+                .secure(true)
                 .on_input(App::PasswordChanged)
-                .width(300)
+                .width(500)
                 .padding(10);
             column![
                 user_input,
@@ -107,11 +108,11 @@ impl Application for SecPassApp {
         .spacing(20)
         .align_items(iced::Alignment::Center);
 
-        container(content).width(iced::Length::Fill).height(iced::Length::Fill).center_x().into()
+        container(content).width(iced::Length::Fill).height(iced::Length::Fill).into()
     }
 
     fn theme(&self) -> Theme {
-        Theme::TokyoNightLight
+        Theme::GruvboxDark
     }
 }
 
