@@ -32,6 +32,8 @@ pub fn insert_user(conn: &sqlite::Connection, username: &str, password: &str) {
     conn.execute(&query).unwrap();
 }
 
+// I'll keep it for testing purposes
+#[allow(unused)]
 pub fn get_all_users(conn: &sqlite::Connection) {
     let query = "SELECT * FROM users;";
 

@@ -75,7 +75,6 @@ pub fn register_user(username: &str, password: &str) {
     let hashed_password = bcrypt::hash(&user.password, bcrypt::DEFAULT_COST).unwrap();
     let conn = db::create_db();
     db::insert_user(&conn, &user.username, &hashed_password);
-    println!("{:#?}", get_all_users());
 }
 
 // Function to login a user
@@ -102,8 +101,9 @@ pub fn login_user(username: &str, password: &str) -> bool {
         }
 
         if user.username == username {
-            let hashed_password = bcrypt::hash(&user.password, bcrypt::DEFAULT_COST).unwrap();
-            if hashed_password == user.password {
+            // Decrypt the database password
+            let hashed_password = bcrypt::verify(&password, &user.password).unwrap();
+            if hashed_password {
                 found = true;
             }
         }
@@ -114,6 +114,8 @@ pub fn login_user(username: &str, password: &str) -> bool {
     found
 }
 
+// I'll keep it for testing purposes
+#[allow(unused)]
 fn get_all_users() {
     let conn = db::create_db();
     db::get_all_users(&conn);
