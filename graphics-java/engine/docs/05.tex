@@ -1,0 +1,32 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[document]{ragged2e}
+\usepackage{amsfonts}
+\usepackage{natbib}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+
+\title{Diferencias entre el algoritmo de Bresenham y el algoritmo de punto medio.}
+\author{Victor Gerardo Rodríguez Barragán}
+\date{}
+
+\begin{document}
+\maketitle
+\justify
+
+En el algoritmo de Bresenham, se utiliza el valor $p = 2 * dy - dx$ para determinar cuándo cambiar
+de píxel en el eje $y$. Este valor se actualiza según una decisión basada en $p$ en cada paso. Ademas
+se utilizan incrementos constantes (\textbf{xInc} y \textbf{yInc}) que dependen de la dirección de la línea. La actualización
+de $p$ también depende de la dirección de la línea y se calcula de manera diferente según si la pendiente es mayor a 1 o menor a 1.
+\vspace{0.25cm}\\
+En el algoritmo de punto medio, se utiliza el valor $d = dy - (dx / 2)$ para determinar cuándo cambiar
+de píxel en el eje $y$. Este valor también se actualiza en cada paso, pero la forma en que se actualiza es diferente a la de Bresenham.
+Los incrementos $(x y)$ son constantes y no dependen de la dirección de la línea. La actualización de $d$ se realiza de manera diferente
+dependiendo de si el píxel seleccionado está arriba o abajo de la línea.
+\end{document}

@@ -1,0 +1,36 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[document]{ragged2e}
+\usepackage{amsfonts}
+\usepackage{natbib}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+
+\title{Modelo matemático mejorado para dibujar una línea recta}
+\author{Victor Gerardo Rodríguez Barragán}
+\date{}
+
+\begin{document}
+\maketitle
+\justify
+
+El algoritmo principal comparte la misma estructura base
+para dibujar una linea entre los puntos $x_1,y_1$ y $x_2,y_2$.
+\vspace{0.25cm}\\
+En el codigo manejamos ahora casos especificos, como el caso
+el valor de $dx = 0$ o $dy = 0$ para evitar divisiones estas
+divisiones y mejorar la eficiencia. Por ejemplo, si dx es cero,
+significa que la línea es vertical, por lo que se dibuja de
+forma vertical incrementando solo el eje y.
+\vspace{0.25cm}\\
+Pero la mejora más importante es la condicional si $dx$ es mayor que $dy$ donde
+se compara la magnitud de $dx$ y $dy$ para determinar qué eje (horizontal o vertical)
+incrementar durante el dibujo de la línea. Esto ayuda a mejorar la eficiencia y la precisión del dibujo
+en casos donde la línea es más vertical que horizontal, o viceversa y no solo una línea diagonal perfecta.
+\end{document}
