@@ -1,5 +1,5 @@
 public class Coordinates3D {
-    private double x, y, z;
+    public double x, y, z;
 
     public Coordinates3D(double x, double y, double z) {
         this.x = x;

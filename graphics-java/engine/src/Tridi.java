@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,17 +49,7 @@ public class Tridi extends JPanel implements KeyListener {
         pressedKeys.add(e.getKeyCode());
         if (e.getKeyCode() == KeyEvent.VK_1) { // practica 01 Projecting 3D cube
             Pixel.clear();
-            int vp[] = {5, 5, 100}; // Viewpoint
-            int points[][] = {
-                {300, 200, 200},
-                {300, 400, 300},
-                {500, 200, 200},
-                {500, 400, 300},
-                {200, 300, 200},
-                {200, 500, 400},
-                {400, 300, 200},
-                {400, 500, 400}};
-            Projections.parallelCube(vp, points, Color.MAGENTA);
+            Projections.parallelCube(100, 100, 100, 50, new int[]{0, 0, 0}, Color.MAGENTA);
         }
         if (e.getKeyCode() == KeyEvent.VK_2) {
             Pixel.clear();
@@ -76,6 +67,50 @@ public class Tridi extends JPanel implements KeyListener {
             Projections.perspectiveCube(vp, points, Color.MAGENTA);
         }
         if (e.getKeyCode() == KeyEvent.VK_3) { // Translate 3D cube
+            Pixel.clear();
+            int x = 400, y = 300, z = 100, w = 50;
+            Coordinates3D[] points = new Coordinates3D[8];
+            Projections.parallelCube(x, y, z, w, new int[]{0, 0, 0}, Color.MAGENTA);
+            thread = new Thread(() -> {
+                int speed = 5; // Translation speed
+                while (true) {
+                    try {
+                        Thread.sleep(50); // Delay for smooth animation
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+
+                    int tx = 0, ty = 0, tz = 0;
+                    boolean translated = false;
+
+                    synchronized (this) {
+                        if (pressedKeys.contains(KeyEvent.VK_W)) { // Translate up
+                            ty = -speed;
+                            translated = true;
+                        }
+                        if (pressedKeys.contains(KeyEvent.VK_S)) { // Translate down
+                            ty = speed;
+                            translated = true;
+                        }
+                        if (pressedKeys.contains(KeyEvent.VK_A)) { // Translate left
+                            tx = -speed;
+                            translated = true;
+                        }
+                        if (pressedKeys.contains(KeyEvent.VK_D)) { // Translate right
+                            tx = speed;
+                            translated = true;
+                        }
+
+                        if (translated) {
+                            Pixel.clear();
+                            Projections.parallelCube(x, y, z, w, new int[]{tx, ty, tz}, Color.YELLOW);
+                            Pixel.refresh();
+                        }
+                    }
+                }
+            });
+        }
+        /* if (e.getKeyCode() == KeyEvent.VK_3) { // Translate 3D cube
             Pixel.clear();
             int vp[] = {5, 5, 100}; // Viewpoint
             int points[][] = {
@@ -183,7 +218,61 @@ public class Tridi extends JPanel implements KeyListener {
             });
             thread.start();
         }
-        if (e.getKeyCode() == KeyEvent.VK_5) { // Rotate 3D cube
+        if (e.getKeyCode() == KeyEvent.VK_5) { // Rotate 3D cube automatically
+            Pixel.clear();
+            pressedKeys.clear();
+            int vp[] = {5, 5, 100}; // Viewpoint
+            int points[][] = {
+                {300, 200, 200},
+                {300, 400, 300},
+                {500, 200, 200},
+                {500, 400, 300},
+                {200, 300, 200},
+                {200, 500, 400},
+                {400, 300, 200},
+                {400, 500, 400}};
+
+            Projections.parallelCube(vp, points, Color.MAGENTA);
+
+            thread = new Thread(() -> {
+                double angle = Math.toRadians(1); // Rotation angle
+                while (true) {
+                    try {
+                        Thread.sleep(50); // Delay for smooth animation
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+
+                    synchronized (points) {
+                        Transformations.setRotation(angle, angle, angle);
+                        Coordinates3D centroid = calculateCentroid(points);
+                        for (int i = 0; i < points.length; i++) {
+                            Coordinates3D rotatedPoint = Transformations.rotate3D(points[i]);
+                            points[i][0] = (int) rotatedPoint.getX();
+                            points[i][1] = (int) rotatedPoint.getY();
+                            points[i][2] = (int) rotatedPoint.getZ();
+                        }
+                        Coordinates3D newCentroid = calculateCentroid(points);
+
+                        double tx = centroid.getX() - newCentroid.getX();
+                        double ty = centroid.getY() - newCentroid.getY();
+                        double tz = centroid.getZ() - newCentroid.getZ();
+
+                        for (int i = 0; i < points.length; i++) {
+                            points[i][0] += tx;
+                            points[i][1] += ty;
+                            points[i][2] += tz;
+                        }
+
+                        Pixel.clear();
+                        Projections.parallelCube(vp, points, Color.YELLOW);
+                        Pixel.refresh();
+                    }
+                }
+            });
+            thread.start();
+        }
+        if (e.getKeyCode() == KeyEvent.VK_6) { // Rotate 3D cube manually
             Pixel.clear();
             pressedKeys.clear();
             int vp[] = {5, 5, 100}; // Viewpoint
@@ -264,21 +353,16 @@ public class Tridi extends JPanel implements KeyListener {
             });
             thread.start();
         }
-        if (e.getKeyCode() == KeyEvent.VK_9) {
+        if (e.getKeyCode() == KeyEvent.VK_9) { // cylinder/hyperboloid
             Pixel.clear();
-            int vp[] = {2, 2, 50};
-            int points[][] = {
-                {300, 200, 200},
-                {300, 400, 300},
-                {500, 200, 200},
-                {500, 400, 300},
-                {200, 300, 200},
-                {200, 500, 400},
-                {400, 300, 200},
-                {400, 500, 400}
-            };
-            Projections.fill3DCube(vp, points, Color.MAGENTA);
-        }
+            int vp[] = {5, 5, 100}; // Viewpoint
+            java.util.List<int[]> points = new ArrayList<>();
+            Projections.cylinder(points);
+            for (int i = 0; i < points.size(); i++) {
+                int[] point = points.get(i);
+                Pixel.drawPixel(point[0], point[1], Color.MAGENTA);
+            }
+        } */
     }
 
     @Override

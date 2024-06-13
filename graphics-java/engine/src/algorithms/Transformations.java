@@ -56,24 +56,19 @@ public class Transformations
         }
     }
 
-    public static Coordinates3D translate3D(int[] point, double tx, double ty, double tz) {
-        double[][] pointMatrix = {
-            {point[0]}, // x
-            {point[1]}, // y
-            {point[2]}, // z
-            {1}         // w
+    public static Coordinates3D translate3D(Coordinates3D point, int tx, int ty, int tz) {
+        double[][] origin = {{point.x, point.y, point.z, 1}};
+        Coordinates3D vector = new Coordinates3D(translation.getX(), translation.getY(), translation.getZ());
+        // Create the rotation matrix
+        double[][] matrizTransformacion = {
+                {1, 0, 0, tx},
+                {0, 1, 0, ty},
+                {0, 0, 1, tz},
+                {vector.x, vector.y, vector.z, 1}
         };
+        double[][] result = Coordinates3D.multiply(origin, matrizTransformacion);
 
-        double[][] translationMatrix = {
-            {1, 0, 0, tx},
-            {0, 1, 0, ty},
-            {0, 0, 1, tz},
-            {0, 0, 0, 1}
-        };
-
-        double[][] result = Coordinates3D.multiply(translationMatrix, pointMatrix);
-
-        return new Coordinates3D(result[0][0], result[1][0], result[2][0]);
+        return new Coordinates3D(result[0][0], result[0][1], result[0][2]);
     }
 
     public static void setTranslation(double x, double y, double z) {
@@ -82,11 +77,11 @@ public class Transformations
         translation.setZ(z);
     }
 
-    public static Coordinates3D rotate3D(int[] origin) {
+    public static Coordinates3D rotate3D(Coordinates3D origin) {
         double[][] originMatrix = {
-            {origin[0]}, // x
-            {origin[1]}, // y
-            {origin[2]}, // z
+            {origin.x}, // x
+            {origin.y}, // y
+            {origin.z}, // z
             {1}         // w
         };
         double xRads = rotation.getX();
@@ -112,6 +107,23 @@ public class Transformations
         rotation.setZ(z);
     }
 
+    private static Coordinates3D scale3D(Coordinates3D origen) {
+
+        double[][] matrizOrigen = {{origen.x, origen.y, origen.z, 1}};
+        Coordinates3D vector = new Coordinates3D(translation.getX(), translation.getY(), translation.getZ());
+        // Create the rotation matrix
+        double[][] matrizTransformacion = {
+                {vector.x, 0, 0, 0},
+                {0, vector.y, 0, 0},
+                {0, 0, vector.z, 0},
+                {0, 0, 0, 1}
+        };
+        double[][] result = Coordinates3D.multiply(matrizOrigen, matrizTransformacion);
+
+        return new Coordinates3D(result[0][0], result[0][1], result[0][2]);
+    }
+
+
     public static float[] scale(float x, float y, float sx, float sy)
     {
         float[][] v1 = {
@@ -129,4 +141,11 @@ public class Transformations
 
         return new float[] {v2[0], v2[1]};
     }
+
+    /* public static Coordinates3D calculateTransformations(Coordinates3D punto) {
+        punto = translate3D(punto);
+        punto = rotate3D(punto);
+        punto = scale3D(punto);
+        return punto;
+    } */
 }
