@@ -2,6 +2,35 @@ import java.awt.Color;
 
 /* 3D projections */
 public class Projections {
+    // projection
+    public static Coordinates3D parallelProjection(Coordinates3D point, Coordinates3D vector) {
+        double u;
+        if (vector.z == 0) {
+            u = 0;
+        } else {
+            u = (double) (-point.z / vector.z);
+        }
+        int x = (int) (point.x + vector.x * u);
+        int y = (int) (point.y + vector.y * u);
+        return new Coordinates3D(x, y, 0);
+    }
+
+    // projection (perspective)
+    public static Coordinates2D perspectiveProjection(Coordinates3D point) {
+        double u;
+        Coordinates3D vector = new Coordinates3D(0, 0, 1);
+        if ((point.z - vector.z) == 0) {
+            u = 0;
+        } else {
+            u = (double) (-vector.z / (point.z - vector.z));
+        }
+        double x = (vector.x + ((double) point.x - (double) vector.x) * u);
+
+        double y = (vector.y + ((double) point.y - (double) vector.y) * u);
+
+        return new Coordinates2D((int) x, (int) y);
+    }
+
     // Parallel projection to draw a cube
     public static void parallelCube(int vp[], int points[][], Color color) {
 
@@ -131,15 +160,47 @@ public class Projections {
         Lines.drawDDA(projectedPoints[7][0], projectedPoints[7][1], projectedPoints[6][0], projectedPoints[6][1], color);
     }
 
-    public static void line3D(int x1, int y1, int z1, int x2, int y2, int z2) {
-        Coordinates3D[] puntos = new Coordinates3D[2];
+    // Rotate curve (helix)
+    // almost a circle
+    public static void parallelCurve(double points[][], Color color) {
+        int vp[] = {2, 2, 50};
+        double projectedPoints[][] = new double[points.length][2];
 
-        puntos[0] = new Coordinates3D(x1, y1, z1);
-        puntos[1] = new Coordinates3D(x2, y2, z2);
-        Coordinates2D[] puntosFinales = new Coordinates2D[2];
-        for (int i = 0; i < puntos.length; i++) {
-            puntosFinales[i] = p
+        int angleX = 0, angleY = 0, angleZ = 0;
+
+        for (int i = 0; i < points.length; i++) {
+            double[] v = points[i];
+
+            double y = v[1] * Math.cos(angleX) - v[2] * Math.sin(angleX);
+            double z = v[1] * Math.sin(angleX) + v[2] * Math.cos(angleX);
+            v[1] = y;
+            v[2] = z;
+
+            double x = v[0] * Math.cos(angleY) + v[2] * Math.sin(angleY);
+            z = -v[0] * Math.sin(angleY) + v[2] * Math.cos(angleY);
+            v[0] = x;
+            v[2] = z;
+
+            x = v[0] * Math.cos(angleZ) - v[1] * Math.sin(angleZ);
+            y = v[0] * Math.sin(angleZ) + v[1] * Math.cos(angleZ);
+            v[0] = x;
+            v[1] = y;
+
+            projectedPoints[i][0] = v[0];
+            projectedPoints[i][1] = v[1];
         }
-        Lines.drawDDA(puntosFinales[0].x, puntosFinales[0].y, puntosFinales[1].x, puntosFinales[1].y);
+
+        int centerX = 400, centerY = 300;
+        int scale = 50;
+
+        for (int i = 0; i < points.length - 1; i++) {
+            int x1 = centerX + (int) (projectedPoints[i][0] * scale);
+            int y1 = centerY + (int) (projectedPoints[i][1] * scale);
+            int x2 = centerX + (int) (projectedPoints[i + 1][0] * scale);
+            int y2 = centerY + (int) (projectedPoints[i + 1][1] * scale);
+
+            Pixel.drawPixel(x1, y1, color);
+            Lines.drawDDA(x1, y1, x2, y2, color);
+        }
     }
 }

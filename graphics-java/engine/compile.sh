@@ -42,6 +42,8 @@ if [ "$args" == "-cr" ]; then
         java -cp bin Animation
     elif [ "$2" == "tridi" ]; then
         java -cp bin Tridi
+    elif [ "$2" == "8" ]; then
+        java -cp bin Surface
     else
         echo "Invalid argument."
     fi

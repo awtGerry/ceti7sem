@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 public class Pixel extends JComponent {
     public static BufferedImage bufferedImage;
     public static BufferedImage bufferedPixel;
-    public static Pixel pixel;
+    private static Pixel pixel;
 
     public Pixel(int width, int height) {
         bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -33,7 +33,9 @@ public class Pixel extends JComponent {
 
     /* metodo para limpiar la pantalla */
     public static void clear() {
-        bufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics g = bufferedImage.getGraphics();
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight());
         pixel.repaint();
     }
 
