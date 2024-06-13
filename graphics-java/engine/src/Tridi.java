@@ -183,7 +183,61 @@ public class Tridi extends JPanel implements KeyListener {
             });
             thread.start();
         }
-        if (e.getKeyCode() == KeyEvent.VK_5) { // Rotate 3D cube
+        if (e.getKeyCode() == KeyEvent.VK_5) { // Rotate 3D cube automatically
+            Pixel.clear();
+            pressedKeys.clear();
+            int vp[] = {5, 5, 100}; // Viewpoint
+            int points[][] = {
+                {300, 200, 200},
+                {300, 400, 300},
+                {500, 200, 200},
+                {500, 400, 300},
+                {200, 300, 200},
+                {200, 500, 400},
+                {400, 300, 200},
+                {400, 500, 400}};
+
+            Projections.parallelCube(vp, points, Color.MAGENTA);
+
+            thread = new Thread(() -> {
+                double angle = Math.toRadians(1); // Rotation angle
+                while (true) {
+                    try {
+                        Thread.sleep(50); // Delay for smooth animation
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+
+                    synchronized (points) {
+                        Transformations.setRotation(angle, angle, angle);
+                        Coordinates3D centroid = calculateCentroid(points);
+                        for (int i = 0; i < points.length; i++) {
+                            Coordinates3D rotatedPoint = Transformations.rotate3D(points[i]);
+                            points[i][0] = (int) rotatedPoint.getX();
+                            points[i][1] = (int) rotatedPoint.getY();
+                            points[i][2] = (int) rotatedPoint.getZ();
+                        }
+                        Coordinates3D newCentroid = calculateCentroid(points);
+
+                        double tx = centroid.getX() - newCentroid.getX();
+                        double ty = centroid.getY() - newCentroid.getY();
+                        double tz = centroid.getZ() - newCentroid.getZ();
+
+                        for (int i = 0; i < points.length; i++) {
+                            points[i][0] += tx;
+                            points[i][1] += ty;
+                            points[i][2] += tz;
+                        }
+
+                        Pixel.clear();
+                        Projections.parallelCube(vp, points, Color.YELLOW);
+                        Pixel.refresh();
+                    }
+                }
+            });
+            thread.start();
+        }
+        if (e.getKeyCode() == KeyEvent.VK_6) { // Rotate 3D cube manually
             Pixel.clear();
             pressedKeys.clear();
             int vp[] = {5, 5, 100}; // Viewpoint
@@ -295,5 +349,27 @@ public class Tridi extends JPanel implements KeyListener {
         }
         double numPoints = points.length;
         return new Coordinates3D(cx / numPoints, cy / numPoints, cz / numPoints);
+    }
+
+    private void dibujarLinea(int x0, int y0, int x1, int y1, Color color) {
+        int dx = Math.abs(x1 - x0);
+        int dy = Math.abs(y1 - y0);
+        int sx = x0 < x1 ? 1 : -1;
+        int sy = y0 < y1 ? 1 : -1;
+        int err = dx - dy;
+
+        while (true) {
+            Pixel.drawPixel(x0, y0, color);
+            if (x0 == x1 && y0 == y1) break;
+            int e2 = 2 * err;
+            if (e2 > -dy) {
+                err -= dy;
+                x0 += sx;
+            }
+            if (e2 < dx) {
+                err += dx;
+                y0 += sy;
+            }
+        }
     }
 }

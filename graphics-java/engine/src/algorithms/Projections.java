@@ -130,4 +130,16 @@ public class Projections {
         Lines.drawDDA(projectedPoints[1][0], projectedPoints[1][1], projectedPoints[0][0], projectedPoints[0][1], color);
         Lines.drawDDA(projectedPoints[7][0], projectedPoints[7][1], projectedPoints[6][0], projectedPoints[6][1], color);
     }
+
+    public static void line3D(int x1, int y1, int z1, int x2, int y2, int z2) {
+        Coordinates3D[] puntos = new Coordinates3D[2];
+
+        puntos[0] = new Coordinates3D(x1, y1, z1);
+        puntos[1] = new Coordinates3D(x2, y2, z2);
+        Coordinates2D[] puntosFinales = new Coordinates2D[2];
+        for (int i = 0; i < puntos.length; i++) {
+            puntosFinales[i] = p
+        }
+        Lines.drawDDA(puntosFinales[0].x, puntosFinales[0].y, puntosFinales[1].x, puntosFinales[1].y);
+    }
 }
