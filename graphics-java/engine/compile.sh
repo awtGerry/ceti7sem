@@ -3,7 +3,8 @@ args="$1"
 # Compile the program if args is -c
 if [ "$args" == "-c" ]; then
     echo "Compiling..."
-    javac -d bin src/*.java src/algorithms/*.java src/pacman/*.java
+    # javac -d bin src/*.java src/algorithms/*.java src/pacman/*.java
+    javac -d bin src/*.java src/algorithms/*.java
     echo "Done."
 fi
 
@@ -14,6 +15,8 @@ if [ "$args" == "-r" ]; then
         java -cp bin Main
     elif [ "$2" == "pacman" ]; then
         java -cp bin Animation
+    elif [ "$2" == "tridi" ]; then
+        java -cp bin Tridi
     else
         echo "Invalid argument."
     fi
@@ -29,15 +32,16 @@ fi
 # Compile and run the program if args is -cr
 if [ "$args" == "-cr" ]; then
     echo "Compiling..."
-    javac -d bin src/*.java src/algorithms/*.java src/pacman/*.java
+    # javac -d bin src/*.java src/algorithms/*.java src/pacman/*.java
+    javac -d bin src/*.java src/algorithms/*.java
     echo "Done."
     echo "Running..."
     if [ "$2" == "main" ]; then
         java -cp bin Main
     elif [ "$2" == "pacman" ]; then
         java -cp bin Animation
-    elif [ "$2" == "scalation" ]; then
-        java -cp bin Scalation
+    elif [ "$2" == "tridi" ]; then
+        java -cp bin Tridi
     else
         echo "Invalid argument."
     fi
