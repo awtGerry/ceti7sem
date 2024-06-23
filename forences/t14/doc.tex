@@ -1,0 +1,70 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[document]{ragged2e}
+\usepackage{amsfonts}
+\usepackage{natbib}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+
+\pagestyle{fancy}
+\lhead{\includegraphics[width=0.5cm]{~/Documents/ceti/Logo-CETI-Black.jpg}}
+\rhead{Clase 14}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\title{Clase 14 - Modulos autopsy}
+\author{Victor Gerardo Rodríguez Barragán}
+\date{21 de mayo de 2024}
+
+\begin{document}
+\maketitle
+\justify
+\subsection*{Módulos principales:}
+\begin{itemize}
+    \item
+    Ingesta: Este módulo se utiliza para adquirir y analizar imágenes de discos, unidades extraíbles y archivos de memoria.
+    \item
+    Línea de tiempo: Este módulo crea una línea de tiempo de los eventos que tuvieron lugar en el sistema informático examinado.
+    \item
+    Hashing: Este módulo calcula sumas de verificación hash para los archivos y otros datos para verificar su integridad y detectar posibles manipulaciones.
+    \item
+    Búsqueda de palabras clave: Este módulo busca palabras clave específicas en archivos, registros y otros datos.
+    \item
+    Extracción de datos: Este módulo extrae datos de archivos y aplicaciones, como documentos, correos electrónicos, imágenes y registros de chat.
+    \item
+    Análisis de malware: Este módulo analiza archivos en busca de malware y otro código malicioso.
+    \item
+    Visualización de datos: Este módulo proporciona herramientas para visualizar los datos recopilados durante la investigación, como gráficos, tablas y mapas.
+    \item
+    Analizador de Android: interpreta archivos de dispositivos Android.
+\end{itemize}
+
+Autopsy también incluye una serie de módulos adicionales que proporcionan funciones especializadas, como:
+\begin{itemize}
+    \item
+    Análisis de archivos de registro: Este módulo analiza archivos de registro para identificar eventos de seguridad y actividad del usuario.
+    \item
+    Análisis de red: Este módulo analiza el tráfico de red para identificar posibles intrusiones y ataques.
+    \item
+    Análisis de imágenes: Este módulo analiza imágenes para identificar objetos y personas.
+    \item
+    Análisis de correo electrónico: Este módulo analiza correos electrónicos para identificar mensajes maliciosos y pistas de investigación.
+\end{itemize}
+
+Autopsy se puede integrar con otras herramientas forenses digitales, como Volatility y The Sleuth Kit, para ampliar sus capacidades.
+\begin{itemize}
+\item
+Video Triage: Efficiently triage video content by splitting video files up into easily viewable thumbnail images (keyframes).
+\item
+Law Enforcement Bundle: Integrate Project Vic and C4P/All databases to identify known child exploitation images.
+\end{itemize}
+
+\end{document}

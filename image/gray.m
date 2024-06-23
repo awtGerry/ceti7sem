@@ -1,0 +1,2 @@
+% get image
+IMAGE= imre

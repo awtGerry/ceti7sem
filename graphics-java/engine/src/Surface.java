@@ -8,7 +8,7 @@ public class Surface extends JFrame implements KeyListener {
     private BufferedImage bufferPixel;
     private Cubo3D cube;
     private int axis = 2; // 0: X, 1: Y, 2: Z
-    private boolean automaticMode = true;
+    private boolean automaticMode = false;
     private long lastTime;
     private Timer timer;
 
@@ -26,21 +26,17 @@ public class Surface extends JFrame implements KeyListener {
 
         lastTime = System.currentTimeMillis();
 
-        cube.rotar(axis);
-        Timer timer = new Timer(1, new ActionListener() {
+        Timer timer = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (automaticMode) {
-                    // long currentTime = System.currentTimeMillis();
-                    // if (automaticMode) {
-                        // Rotate the cube only every 100 milliseconds
-                        // if (currentTime - lastTime > 10000) {
-                        //     lastTime = currentTime;
-                        //     cube.rotar(axis);
-                        // }
-                    // } 
-                    // cube.rotar(axis);
+                if (automaticMode) { // Rotate automatically
+                    long currentTime = System.currentTimeMillis();
+                    if (currentTime - lastTime > 10) {
+                        cube.rotar(axis);
+                        lastTime = currentTime;
+                    }
                 }
+
                 repaint();
             }
         });
@@ -256,7 +252,7 @@ class Cubo3D {
             int x1 = centroX + (int) (projVertices[arista[1]][0] * escala);
             int y1 = centroY + (int) (projVertices[arista[1]][1] * escala);
 
-            ventana.dibujarLinea(x0, y0, x1, y1, Color.YELLOW); // Cubo verde
+            ventana.dibujarLinea(x0, y0, x1, y1, Color.MAGENTA); // Cubo verde
         }
 
         int[][] triangles = {
@@ -276,7 +272,7 @@ class Cubo3D {
             int x2 = centroX + (int) (projVertices[triangulo[2]][0] * escala);
             int y2 = centroY + (int) (projVertices[triangulo[2]][1] * escala);
 
-            ventana.dibujarTriangulo(new int[]{x0, x1, x2}, new int[]{y0, y1, y2}, Color.YELLOW); // Triángulo rojo
+            ventana.dibujarTriangulo(new int[]{x0, x1, x2}, new int[]{y0, y1, y2}, Color.MAGENTA); // Triángulo rojo
         }
     }
 

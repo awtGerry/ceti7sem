@@ -1,0 +1,59 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[document]{ragged2e}
+\usepackage{amsfonts}
+\usepackage{natbib}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+
+\pagestyle{fancy}
+\lhead{\includegraphics[width=0.5cm]{~/Documents/ceti/Logo-CETI-Black.jpg}}
+\rhead{Desarrollo de Software Seguro}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\title{DISEÑO Y ARQUITECTURA DE SOFTWARE SEGURO}
+\author{Victor Gerardo Rodríguez Barragán}
+\date{28 de abril de 2024}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\justify
+\newpage
+\section{Diseño de software seguro}
+\subsection{Modelado de amenazas}
+Identifica amenazas y vulnerabilidades potenciales en el diseño del software en las primeras etapas del proceso de desarrollo. Esto implica crear un modelo de amenazas para comprender los posibles vectores de ataque y priorizar las medidas de seguridad.
+\subsection{Arquitectura de seguridad}
+el diseño de la arquitectura del software debe ser teniendo en cuenta la seguridad. Utilizar patrones y principios de seguridad para garantizar que el sistema sea sólido frente a amenazas de seguridad comunes, como la inyección SQL, secuencias de comandos entre sitios (XSS) y falsificación de solicitudes entre sitios (CSRF).
+\subsection{Revisión de código}
+Realice revisiones de código regulares para identificar y corregir problemas de seguridad en el código fuente. Utilice herramientas de análisis estático de código y realice revisiones manuales para garantizar que el código cumpla con las mejores prácticas de seguridad.
+\vspace{0.25cm}\\
+Utilice herramientas de análisis estático y revisiones manuales para garantizar que el código siga prácticas y pautas de codificación segura.
+\subsection{Pruebas de seguridad}
+Realice pruebas de seguridad, como pruebas de penetración, pruebas de fuzz y escaneo de vulnerabilidades para identificar y mitigar los riesgos de seguridad en el software. Incluya pruebas de seguridad como parte del proceso de prueba regular para garantizar que se identifiquen y aborden las vulnerabilidades de seguridad.
+\subsection{Documentación de seguridad}
+Documente los controles de seguridad, las políticas y los procedimientos en el diseño y desarrollo del software. Proporcione documentación detallada sobre las medidas de seguridad implementadas y las mejores prácticas de seguridad para garantizar que el software sea seguro y resistente a las amenazas.
+\vspace{0.25cm}\\
+Esto incluye documentar el modelo de amenaza, la arquitectura de seguridad, las prácticas de codificación segura y los resultados de las pruebas de seguridad. Esta documentación puede ayudar a mantener y mejorar la seguridad del software a lo largo del tiempo.
+\section{Buena prácticas en la arquitectura}
+\subsection{Defensa en profundidad}
+implementar múltiples capas de controles de seguridad en toda la arquitectura del software. Esto garantiza que incluso si una capa se ve comprometida, otras capas aún pueden proteger el sistema. Por ejemplo, utilice una combinación de firewalls de red, firewalls de aplicaciones y controles de acceso para defenderse contra diferentes tipos de ataques.
+\subsection{Principio de privilegio mínimo}
+siga el principio de privilegio mínimo otorgando solo el nivel mínimo de acceso o permisos necesarios para que los usuarios, procesos y sistemas realicen sus tareas. Limitar el acceso reduce el impacto potencial de las violaciones de seguridad y ayuda a contener el daño en caso de que se produzca un compromiso.
+\subsection{Comunicación segura}
+asegúrese de que todos los canales de comunicación dentro de la arquitectura del software sean seguros. Utilice protocolos de cifrado como TLS/SSL para cifrar los datos en tránsito y protegerlos contra escuchas y manipulaciones. Además, implementar mecanismos seguros de autenticación y autorización para verificar la identidad de los usuarios y evitar el acceso no autorizado.
+\subsection{Validación y desinfección de entradas}
+valide y desinfecte todas las entradas recibidas por el software para evitar vulnerabilidades comunes como inyección SQL, secuencias de comandos entre sitios (XSS) e inyección de comandos. Utilice técnicas de validación de entradas, como listas blancas, listas negras y expresiones regulares, para garantizar que el sistema solo procese entradas válidas y seguras.
+\subsection{Seguridad por diseño}
+incorporar consideraciones de seguridad en la arquitectura del software desde la fase de diseño inicial. Realice modelos de amenazas para identificar posibles amenazas y vulnerabilidades de seguridad y luego diseñe controles de seguridad para mitigar estos riesgos. Al incorporar la seguridad en la arquitectura desde el principio, puede reducir la probabilidad de que se produzcan problemas de seguridad más adelante en el ciclo de vida del desarrollo.
+
+\end{document}
